@@ -1,0 +1,11 @@
+---
+# This playbook deploys ta simple LAMP stack
+
+- name: Setup the server with a simple LAMP stack
+  hosts: all
+  vars_files:
+    - "roles/lamp_simple/group_vars/all"
+  remote_user: ansible-remote
+  roles:
+    - lamp_simple
+

@@ -1,0 +1,53 @@
+---
+- name: Workaround for a non working DNS
+  lineinfile: 
+    dest: /etc/hosts
+    line: "{{ sat6_ip }} {{ sat6_fqdn }} sat6"
+#
+# If hostgroup != 'false' (i.e. install the client to be managed by Puppet)
+#
+- name: Download bootstrap.py from {{ sat6_fqdn }} 
+  get_url:
+    url: "http://{{ sat6_fqdn }}/pub/bootstrap.py"
+    dest: /usr/local/sbin/bootstrap.py
+  when: hostgroup|lower != 'false'
+  
+- name: Copy bootstrap.py script to /usr/local/sbin and make it executable
+  file:
+    path: /usr/local/sbin/bootstrap.py
+    mode: 0755
+    owner: root
+    group: root
+  when: hostgroup|lower != 'false'
+
+- name: Register to Satellite 6 with puppet enabled and add it to the correct hostgroup
+  command: "/usr/local/sbin/bootstrap.py -l {{ admin_user}} -p {{ admin_pass }} -s {{ sat6_fqdn }} -o {{ organization }} -L {{ location }} -g {{ hostgroup }} -a {{ activationkey }}"
+  when: hostgroup|lower != 'false'
+#
+# If hostgroup == 'false' (i.e. install the client just as a content host)
+#
+- name: Install the katello-ca-consumer-latest.noarch.rpm from {{ sat6_fqdn }}
+  yum:
+    name: http://{{ sat6_fqdn }}/pub/katello-ca-consumer-latest.noarch.rpm
+    state: present
+  when: hostgroup|lower == 'false'
+
+- name: Register to Satellite 6 only for content 
+  command: "/usr/sbin/subscription-manager register --org={{ organization }} --activationkey={{ activationkey }}"
+  when: hostgroup|lower == 'false'
+  register: 'registered'
+
+- name: Install the katello-agent
+  yum:
+    name: katello-agent
+    state: latest
+  when: hostgroup|lower == 'false' and registered|succeeded
+  notify:
+    - Start katello-agent
+    - Enable katello-agent
+
+- name: Update the host to latest errata within the attached content view
+  yum: 
+    name: '*'
+    state: latest
+  when: updatehost|lower == 'true'

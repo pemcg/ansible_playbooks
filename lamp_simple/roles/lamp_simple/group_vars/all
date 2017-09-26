@@ -1,0 +1,11 @@
+---
+# Variables listed here are applicable to all host groups
+
+ntpserver: 192.168.2.1
+httpd_port: 80
+repository: https://github.com/pemcg/mywebapp.git
+mysqlservice: mysqld
+mysql_port: 3306
+dbname: foodb
+dbuser: foouser
+dbpass: secret

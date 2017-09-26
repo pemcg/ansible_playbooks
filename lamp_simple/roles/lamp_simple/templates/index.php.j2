@@ -1,0 +1,23 @@
+<html>
+ <head>
+  <title>Ansible-Managed Application</title>
+ </head>
+ <body>
+ </br>
+  <a href=http://{{ ansible_default_ipv4.address }}/index.html>Homepage</a>
+ </br>
+<?php 
+ Print "This is web server ";
+ echo exec('hostname');
+ Print ", configured using Ansible";
+ Print  "</BR>";
+ echo  "The following databases are configured: </BR>";
+        $link = mysqli_connect('{{ ansible_default_ipv4.address }}', '{{ dbuser }}', '{{ dbpass }}') or die(mysqli_connect_error($link));
+        $res = mysqli_query($link, "SHOW DATABASES;");
+        while ($row = mysqli_fetch_assoc($res)) {
+                echo $row['Database'] . "\n";
+        }
+?>
+</body>
+</html>
+

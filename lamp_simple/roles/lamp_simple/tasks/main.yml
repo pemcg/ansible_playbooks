@@ -1,0 +1,5 @@
+---
+- include: ntp.yml
+- include: mariadb.yml
+- include: httpd.yml
+- include: setup_site.yml

@@ -1,0 +1,7 @@
+---
+- hosts: all
+  vars_files:
+    - "roles/satellite_client/group_vars/all/vars"
+    - "roles/satellite_client/group_vars/all/vault"
+  roles:
+    - satellite_client
