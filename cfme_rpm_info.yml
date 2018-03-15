@@ -21,7 +21,8 @@
           value:  "{{ tower_job_id }}"
       register: workspace
      
-    - shell: yum info '{{ pkg }}'
+    - name: get yum info
+      shell: yum info "{{ pkg }}"
       register: yum_output
 
     - debug: msg="the yum output was {{ yum_output.stdout }}"
