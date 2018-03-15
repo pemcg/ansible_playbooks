@@ -1,26 +1,14 @@
 ---
+vars:
+- pkg: cfme
+
 - name: get cfme rpm info 
   hosts: localhost
   connection: local
   
-  vars:
-    - auto_commit: true
-      pkg: cfme
-      manageiq_validate_certs: false
-      
-  roles:
-    - syncrou.manageiq-automate
+- import_playbook: save_tower_job_id.yml
 
   tasks:
-    - name: "Set the job ID back into $evm.root"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        set_attribute:
-          object: "root"
-          attribute: "tower_job_id"
-          value:  "{{ tower_job_id }}"
-     # register: workspace
-     
     - name: get yum info
       shell: yum info "{{ pkg }}"
       register: yum_output
