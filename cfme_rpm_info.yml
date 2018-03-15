@@ -1,12 +1,12 @@
 ---
-vars:
-- pkg: cfme
+- import_playbook: save_tower_job_id.yml
 
 - name: get cfme rpm info 
   hosts: localhost
   connection: local
   
-- import_playbook: save_tower_job_id.yml
+  vars:
+  - pkg: cfme
 
   tasks:
     - name: get yum info
