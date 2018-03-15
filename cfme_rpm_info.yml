@@ -1,0 +1,27 @@
+ ---
+- name: Testing 
+  hosts: localhost
+  connection: local
+  
+  vars:
+    - auto_commit: true
+      pkg: cfme
+      manageiq_validate_certs: false
+      
+  roles:
+    - syncrou.manageiq-automate
+
+  tasks:
+    - name: "Set the job ID back into $evm.root"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_attribute:
+          object: "root"
+          attribute: "tower_job_id"
+          value:  "{{ tower_job_id }}"
+     # register: workspace
+     
+    - shell: yum info '{{ pkg }}'
+      register: yum_output
+
+    - debug: msg="the yum output was {{ yum_output.stdout }}"
