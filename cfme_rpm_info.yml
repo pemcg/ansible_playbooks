@@ -3,10 +3,10 @@
   hosts: localhost
   connection: local
   
-- import_playbook: save_tower_job_id.yml
-
   vars:
   - pkg: cfme
+  
+- import_playbook: save_tower_job_id.yml
 
   tasks:
     - name: get yum info
