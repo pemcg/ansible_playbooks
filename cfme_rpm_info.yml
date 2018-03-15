@@ -19,7 +19,7 @@
           object: "root"
           attribute: "tower_job_id"
           value:  "{{ tower_job_id }}"
-     # register: workspace
+      register: workspace
      
     - shell: yum info '{{ pkg }}'
       register: yum_output
