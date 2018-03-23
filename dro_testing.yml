@@ -4,7 +4,7 @@
   vars:
     manageiq_validate_certs: False
     object: root
-    firewall_action_dro_name: {{ 'Firewall Action'|urlencode }}
+    firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
     
 # https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Action"
 
