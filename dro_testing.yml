@@ -11,7 +11,8 @@
   tasks:
   - name: Find the "Firewall Action" DRO definition
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ firewall_action_dro_name }}'"
+      #url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ firewall_action_dro_name }}'"
+      url: "{{ manageiq.api_url }}/api/generic_object_definitions"
       method: GET
       validate_certs: no
       headers:
