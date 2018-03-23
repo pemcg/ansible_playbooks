@@ -16,7 +16,7 @@
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
+        #Content-Type:  application/json
       #body_format: json
     register: dro_definition
   
