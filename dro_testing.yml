@@ -20,7 +20,7 @@
       #body_format: json
     register: dro_definition
   
-  - debug: var=dro_definition.json
+  - debug: var=dro_definition.json.resources[0].href
   
     
 #- name: Create DRO entry
