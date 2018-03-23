@@ -5,6 +5,7 @@
     manageiq_validate_certs: False
     object: root
     firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
+    new_dro_name: test
     
 # https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Action"
 
@@ -16,30 +17,29 @@
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        #Content-Type:  application/json
-      #body_format: json
+        Content-Type:  application/json
+      body_format: json
     register: dro_definition
   
   - debug: var=dro_definition.json.resources[0].href
   
-    
-#- name: Create DRO entry
-#   uri:
-#     url: "{{ manageiq.api_url }}/api/generic_objects"
-#     method: POST
-#     validate_certs: no
-#     headers:
-#       X-Auth-Token: "{{ manageiq.api_token }}"
-#       Content-Type:  application/json
-#     body_format: json
-#     body:
-#       action: create
-#       name: "{{ dro_name }}"
-#       generic_object_definition:
-#         href: "{{ manageiq.api_url }}/api/generic_object_definitions/1"
-#       property_attributes:
-#         haproxy_port: "{{ haproxy_port }}"
-#         host1: "{{ hostvars[groups['web'][0]]['ansible_all_ipv4_addresses'][0] }}"
-#         host2: "{{ hostvars[groups['web'][1]]['ansible_all_ipv4_addresses'][0] }}"
-#         lb_address: "{{ hostvars[groups['haproxy'][0]]['ansible_all_ipv4_addresses'][0] }}"
-#   register: dro
+  - name: Create DRO entry
+     uri:
+      url: "{{ manageiq.api_url }}/api/generic_objects"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type:  application/json
+      body_format: json
+      body:
+        action: create
+        name: "{{ new_dro_name }}"
+        generic_object_definition:
+          href: "{{ dro_definition.json.resources[0].href }}"
+        property_attributes:
+          requester_department : Engineering
+          requester: "Peter McGowan"
+          requester_email: "pemcg@redhat.com"
+          fw_group_provisioning_change_number: 123
+     register: dro
