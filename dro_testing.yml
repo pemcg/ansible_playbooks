@@ -20,7 +20,7 @@
       body_format: json
     register: dro_definition
   
-  - debug: var="{{ dro_definition.json.resources[0].href }}"
+  - debug: var="{{ dro_definition.json.resources[0]}}"
   
     
 #- name: Create DRO entry
