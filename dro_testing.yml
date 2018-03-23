@@ -24,7 +24,7 @@
   - debug: var=dro_definition.json.resources[0].href
   
   - name: Create DRO entry
-     uri:
+    uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
       validate_certs: no
@@ -42,4 +42,4 @@
           requester: "Peter McGowan"
           requester_email: "pemcg@redhat.com"
           fw_group_provisioning_change_number: 123
-     register: dro
+    register: dro
