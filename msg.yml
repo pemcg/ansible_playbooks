@@ -8,20 +8,20 @@
   - manageiq_validate_certs: false
   - auto_commit: true
       
-  tasks:
-  - name: Display all variables/facts known for a host
-    debug:
-      var: hostvars[inventory_hostname]
-  #roles:
-  #- syncrou.manageiq-automate
-
   #tasks:
-  #- name: "Write the job ID back into $evm.root"
-  #  manageiq_automate:
-  #    workspace: "{{ workspace }}"
-  #    set_attribute:
-  #      object: "root"
-  #      attribute: "tower_job_id"
-  #      value:  "{{ tower_job_id }}"
+  #- name: Display all variables/facts known for a host
+  #  debug:
+  #    var: hostvars[inventory_hostname]
+  roles:
+  - syncrou.manageiq-automate
+
+  tasks:
+  - name: "Write the job ID back into $evm.root"
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      set_attribute:
+        object: "root"
+        attribute: "tower_job_id"
+        value:  "{{ tower_job_id }}"
 
   - debug: msg="{{ msg_string }}"
