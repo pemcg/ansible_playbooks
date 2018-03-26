@@ -43,7 +43,7 @@
           requester_department: Engineering
           requester: "Peter McGowan"
           requester_email: "pemcg@redhat.com"
-          service_id: "{{  manageiq.service.split("/")[1] }}"
+          service_id: "{{  manageiq.service.split('/')[1] }}"
           fw_group_provisioning_change_number: 123
     register: dro
     
