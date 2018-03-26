@@ -1,23 +1,24 @@
 ---
-- hosts: localhost
+- name: Write a message
+  hosts: localhost
+  connection: local
 
   vars:
-    - msg_string: Default msg string
-    - manageiq_validate_certs: false
-    - connection: local
-    - auto_commit: true
+  - msg_string: Default msg string
+  - manageiq_validate_certs: false
+  - auto_commit: true
       
   roles:
-    - syncrou.manageiq-automate
+  - syncrou.manageiq-automate
 
   tasks:
-    - name: "Write the job ID back into $evm.root"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        set_attribute:
-          object: "root"
-          attribute: "tower_job_id"
-          value:  "{{ tower_job_id }}"
+  - name: "Write the job ID back into $evm.root"
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      set_attribute:
+        object: "root"
+        attribute: "tower_job_id"
+        value:  "{{ tower_job_id }}"
 
   tasks:
   - debug: msg="{{ msg_string }}"
