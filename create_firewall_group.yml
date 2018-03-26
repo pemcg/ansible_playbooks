@@ -47,38 +47,40 @@
           fw_group_provisioning_change_number: 123
     register: dro
     
-    - name: Register firewall group with the service
-      uri:
-        url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
-        method: POST
-        body_format: json
-        body:
-          action: add_resource
-          resource:
-            resource:
-              href: "{{ dro.json.results[0].href }}"
-        validate_certs: False
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json"
-        status_code: 200
-      register: output
-
-    - debug: var=output.json.results[0].success
+  - debug: var=dro.json.resources[0].href
     
-    - name: Change the service name
-      uri:
-        url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
-        method: POST
-        body_format: json
-        body:
-          action: edit
+  - name: Register firewall group with the service
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      body_format: json
+      body:
+        action: add_resource
+        resource:
           resource:
-            name: "{{ firewall_group_name }}"
-            description: "Firewall Group {{ firewall_group_name }}"
-        validate_certs: False
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json"
-        status_code: 200
-      register: output
+            href: "{{ dro.json.results[0].href }}"
+      validate_certs: False
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type: "application/json"
+      status_code: 200
+    register: output
+
+  - debug: var=output.json.results[0].success
+    
+  - name: Change the service name
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      body_format: json
+      body:
+        action: edit
+        resource:
+          name: "{{ firewall_group_name }}"
+          description: "Firewall Group {{ firewall_group_name }}"
+      validate_certs: False
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type: "application/json"
+      status_code: 200
+    register: output
