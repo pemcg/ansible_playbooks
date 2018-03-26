@@ -2,10 +2,10 @@
 - hosts: localhost
 
   vars:
-    msg_string: Default msg string
-    manageiq_validate_certs: false
-    connection: local
-    auto_commit: true
+    - msg_string: Default msg string
+    - manageiq_validate_certs: false
+    - connection: local
+    - auto_commit: true
       
   roles:
     - syncrou.manageiq-automate

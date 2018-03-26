@@ -2,10 +2,10 @@
 - hosts: localhost
 
   vars:
-    manageiq_validate_certs: False
-    object: root
-    firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
-    new_dro_name: test
+    - manageiq_validate_certs: False
+    - object: root
+    - firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
+    - new_dro_name: test
     
 # https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Action"
 
