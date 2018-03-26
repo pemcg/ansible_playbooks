@@ -4,7 +4,7 @@
   connection: local
 
   vars:
-  - msg_string: Default msg string
+  - msg_string: "Default msg string"
   - manageiq_validate_certs: false
   - auto_commit: true
       
