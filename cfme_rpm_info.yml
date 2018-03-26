@@ -4,9 +4,9 @@
   connection: local
   
   vars:
-    - pkg: cfme
-    - auto_commit: true
-    - manageiq_validate_certs: false
+    pkg: cfme
+    auto_commit: true
+    manageiq_validate_certs: false
       
   roles:
     - syncrou.manageiq-automate
