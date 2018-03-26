@@ -4,7 +4,7 @@
   connection: local
 
   vars:
-  - msg_string: "Default msg string"
+  - msg_string: "Default message string"
   - manageiq_validate_certs: false
   - auto_commit: true
       
@@ -20,5 +20,4 @@
         attribute: "tower_job_id"
         value:  "{{ tower_job_id }}"
 
-  tasks:
   - debug: msg="{{ msg_string }}"
