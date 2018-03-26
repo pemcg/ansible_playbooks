@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+
+  vars:
+    msg_string: Default msg string
+
+  tasks:
+  - debug: msg="{{ msg_string }}"
