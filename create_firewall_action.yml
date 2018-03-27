@@ -62,10 +62,10 @@
         #    href: "{{ group_dro_href }}"
     register: action_dro
     
-  - debug: var=action_dro.json
+  #- debug: var=action_dro.json
     
   - set_fact:
-      action_dro_href: "{{ action_dro.json.resources[0].href }}"
+      action_dro_href: "{{ action_dro.json.results[0].href }}"
     
   - debug: var=action_dro_href
   
