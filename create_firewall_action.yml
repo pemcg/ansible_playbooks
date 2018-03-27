@@ -59,7 +59,7 @@
           service_id: "{{ manageiq.service.split('/')[1] }}"
         associations:
           firewall_group:
-            href: "{{ group_dro_href.split('/')[-1] }}"
+          - href: "{{ group_dro_href }}"
     register: action_dro
     
   #- debug: var=action_dro.json
@@ -81,7 +81,7 @@
         action: edit
         associations:
           firewall_actions:
-            href: "{{ action_dro_href.split('/')[-1] }}"
+          - href: "{{ action_dro_href }}"
     register: output 
   
   - name: Register firewall action with the service
