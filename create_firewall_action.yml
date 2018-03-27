@@ -26,7 +26,7 @@
   
   - name: Lookup the "Firewall Group" DRO supplied in the dialog
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_objects?expand=resources&filter[]=name='{{ firewall_group_name }}'"
+      url: "{{ manageiq.api_url }}/api/generic_objects?expand=resources&filter[]=name='{{ firewall_group_name|urlencode }}'"
       method: GET
       validate_certs: no
       headers:
