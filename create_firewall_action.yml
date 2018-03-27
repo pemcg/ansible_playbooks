@@ -57,9 +57,9 @@
           requester: "Peter McGowan"
           requester_email: "pemcg@redhat.com"
           service_id: "{{ manageiq.service.split('/')[1] }}"
-        associations:
-          firewall_group:
-            href: "{{ group_dro_href }}"
+        #associations:
+        #  firewall_group:
+        #    href: "{{ group_dro_href }}"
     register: action_dro
     
   - set_fact:
