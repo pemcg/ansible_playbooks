@@ -49,7 +49,7 @@
       body_format: json
       body:
         action: create
-        name: "{{ firewall_group_name }}"
+        name: "{{ ipaddress }}"
         generic_object_definition:
           href: "{{ action_dro_definition_href }}"
         property_attributes:
@@ -61,6 +61,8 @@
         #  firewall_group:
         #    href: "{{ group_dro_href }}"
     register: action_dro
+    
+  - debug: var=action_dro.json
     
   - set_fact:
       action_dro_href: "{{ action_dro.json.resources[0].href }}"
