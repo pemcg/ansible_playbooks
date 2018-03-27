@@ -8,79 +8,79 @@
   - firewall_group_dro_name: "{{ 'Firewall Group'|urlencode }}"
   #- new_dro_name: test
     
-# https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Action"
+# https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Group"
 
   tasks:
         
-  - name: Find the "Firewall Action" DRO definition
+  - name: Find the "Firewall Group" DRO definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ firewall_group_dro_name }}'"
       method: GET
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
       body_format: json
-    register: dro_definition
+    register: group_dro_definition
+    
+  - set_fact:
+      group_dro_definition_href: "{{ group_dro_definition.json.resources[0].href }}"
   
-  - debug: var=dro_definition.json.resources[0].href
+  - debug: var=group_dro_definition_href
   
-  - name: Create DRO entry
+  - name: Create the "Firewall Group" DRO entry
     uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
       body_format: json
       body:
         action: create
         name: "{{ firewall_group_name }}"
         generic_object_definition:
-          href: "{{ dro_definition.json.resources[0].href }}"
+          href: "{{ group_dro_definition_href }}"
         property_attributes:
           requester_department: Engineering
           requester: "Peter McGowan"
           requester_email: "pemcg@redhat.com"
           service_id: "{{  manageiq.service.split('/')[1] }}"
           fw_group_provisioning_change_number: 123
-    register: dro
+    register: group_dro
     
-  - debug: var=dro.json.resources[0].href
+  - set_fact:
+      group_dro_href: "{{ group_dro.json.resources[0].href }}"
+    
+  - debug: var=group_dro_href
     
   - name: Register firewall group with the service
     uri:
       url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
       method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
       body:
         action: add_resource
         resource:
           resource:
-            href: "{{ dro.json.results[0].href }}"
-      validate_certs: False
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type: "application/json"
-      status_code: 200
+            href: "{{ group_dro_href }}"
     register: output
 
-  - debug: var=output.json.results[0].success
+  - debug: var=output.json
     
   - name: Change the service name
     uri:
       url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
       method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
       body:
         action: edit
         resource:
           name: "{{ firewall_group_name }}"
           description: "Firewall Group {{ firewall_group_name }}"
-      validate_certs: False
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type: "application/json"
-      status_code: 200
     register: output
