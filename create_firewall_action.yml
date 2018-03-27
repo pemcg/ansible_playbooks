@@ -108,6 +108,6 @@
       body:
         action: edit
         resource:
-          name: "{{ firewall_group_name }}"
-          description: "Firewall Group {{ firewall_group_name }}"
+          name: "{{ ipaddress }}"
+          description: "Firewall Action {{ ipaddress }}"
     register: output
