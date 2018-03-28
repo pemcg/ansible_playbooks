@@ -1,0 +1,40 @@
+---
+- name: Delete the generic objects that belong to a service
+  hosts: localhost
+
+  vars:
+  - manageiq_validate_certs: False
+  - object: root
+  
+  tasks:
+
+  - name: Find the generic objects that belong to this service
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service}}?attributes=generic_objects
+      method: GET
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type:  application/json
+      body_format: json
+    register: service
+    
+  - set_fact:
+      generic_objects: "{{ service.json.generic_objects }}"
+  
+  - name: Delete the generic objects
+    uri:
+      url: "{{ item.href }}'"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      body:
+        action: delete
+    loop: "{{ generic_objects }}"
+
+
+  
+
+  

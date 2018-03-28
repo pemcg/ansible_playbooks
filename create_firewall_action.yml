@@ -1,5 +1,5 @@
 ---
-- name: Create Firewall Group
+- name: Create Firewall Action
   hosts: localhost
 
   vars:
@@ -8,6 +8,22 @@
   - firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
   
   tasks:
+    
+  - name: Change the service name
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      body:
+        action: edit
+        resource:
+          name: "{{ ipaddress }}"
+          description: "Firewall Action {{ ipaddress }}"
+    register: output
+    
   - name: Find the "Firewall Action" DRO definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ firewall_action_dro_name }}'"
@@ -22,7 +38,7 @@
   - set_fact:
       action_dro_definition_href: "{{ action_dro_definition.json.resources[0].href }}"
   
-  - debug: var=action_dro_definition_href
+  #- debug: var=action_dro_definition_href
   
   - name: Lookup the "Firewall Group" DRO supplied in the dialog
     uri:
@@ -37,7 +53,7 @@
   - set_fact:
       group_dro_href: "{{ group_dro.json.resources[0].href }}"
       
-  - debug: var=group_dro_href
+  #- debug: var=group_dro_href
   
   - name: Create "Firewall Action" DRO entry
     uri:
@@ -99,17 +115,3 @@
             href: "{{ action_dro_href }}"
     register: output
   
-  - name: Change the service name
-    uri:
-      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
-      method: POST
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-      body:
-        action: edit
-        resource:
-          name: "{{ ipaddress }}"
-          description: "Firewall Action {{ ipaddress }}"
-    register: output
