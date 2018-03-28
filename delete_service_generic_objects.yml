@@ -1,11 +1,7 @@
 ---
-- name: Delete the generic objects that belong to a service
+- name: Delete the service's generic objects
   hosts: localhost
 
-  vars:
-  #- manageiq_validate_certs: False
-  #- object: root
-  
   tasks:
 
   - name: Find the generic objects that belong to this service
@@ -21,8 +17,6 @@
     
   - set_fact:
       generic_objects: "{{ service.json.generic_objects }}"
-      
-  - debug: var=generic_objects
   
   - name: Delete the generic objects
     uri:

@@ -3,12 +3,7 @@
   hosts: localhost
 
   vars:
-  - manageiq_validate_certs: False
-  - object: root
   - firewall_group_dro_name: "{{ 'Firewall Group'|urlencode }}"
-  #- new_dro_name: test
-    
-# https://cloudforms02.bit63.net/api/generic_object_definitions?expand=resources&filter[]=name="Firewall Group"
 
   tasks:
     

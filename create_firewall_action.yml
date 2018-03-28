@@ -3,8 +3,6 @@
   hosts: localhost
 
   vars:
-  - manageiq_validate_certs: False
-  - object: root
   - firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
   
   tasks:
