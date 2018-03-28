@@ -24,7 +24,7 @@
   
   - name: Delete the generic objects
     uri:
-      url: "{{ item.href }}'"
+      url: "{{ item.href }}"
       method: POST
       validate_certs: no
       headers:
