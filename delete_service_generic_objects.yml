@@ -3,8 +3,8 @@
   hosts: localhost
 
   vars:
-  - manageiq_validate_certs: False
-  - object: root
+  #- manageiq_validate_certs: False
+  #- object: root
   
   tasks:
 
