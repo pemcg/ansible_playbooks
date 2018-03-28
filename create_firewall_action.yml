@@ -64,7 +64,7 @@
     
   - name: Lookup the user's group
     uri:
-      url: "{{ manageiq.api_url }}/api/groups/{{ requester.current_group_id }}"
+      url: "{{ manageiq.api_url }}/api/groups/{{ requester.json.current_group_id }}"
       method: GET
       validate_certs: no
       headers:
@@ -86,9 +86,9 @@
         generic_object_definition:
           href: "{{ action_dro_definition_href }}"
         property_attributes:
-          requester_department: "{{ requester_group.description }}"
-          requester: "{{ requester.name }}"
-          requester_email: "{{ requester.email }}"
+          requester_department: "{{ requester_group.json.description }}"
+          requester: "{{ requester.json.name }}"
+          requester_email: "{{ requester.json.email }}"
           service_id: "{{ manageiq.service.split('/')[1] }}"
         associations:
           firewall_group:
