@@ -86,7 +86,7 @@
     register: group_dro
     
   - set_fact:
-      group_dro_href: "{{ group_dro.json.resources[0].href }}"
+      group_dro_href: "{{ group_dro.json.results[0].href }}"
     
   #- debug: var=group_dro_href
     
