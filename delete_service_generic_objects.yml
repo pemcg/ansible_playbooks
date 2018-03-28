@@ -21,6 +21,8 @@
     
   - set_fact:
       generic_objects: "{{ service.json.generic_objects }}"
+      
+  - debug: var=generic_objects
   
   - name: Delete the generic objects
     uri:
@@ -32,7 +34,7 @@
       body_format: json
       body:
         action: delete
-    loop: "{{ generic_objects }}"
+    with_items: "{{ generic_objects }}"
 
 
   
