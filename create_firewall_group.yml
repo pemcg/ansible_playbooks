@@ -47,6 +47,10 @@
       body_format: json
     register: requester
     
+  - set_fact:
+      requester_name: "{{ requester.json.name | default('') }}"
+      requester_email: "{{ requester.json.email | default('') }}"
+    
   - name: Lookup the user's group
     uri:
       url: "{{ manageiq.api_url }}/api/groups/{{ requester.json.current_group_id }}"
@@ -55,7 +59,10 @@
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
-    register: requester_group 
+    register: requester_group
+    
+  - set_fact:
+      group_description: "{{ requester_group.json.description | default('') }}"
   
   - name: Create the "Firewall Group" DRO entry
     uri:
@@ -71,9 +78,9 @@
         generic_object_definition:
           href: "{{ group_dro_definition_href }}"
         property_attributes:
-          requester_department: "{{ requester_group.json.description }}"
-          requester: "{{ requester.json.name }}"
-          requester_email: "{{ requester.json.email }}"
+          requester_department: "{{ group_description }}"
+          requester: "{{ requester_name }}"
+          requester_email: "{{ requester_email }}"
           service_id: "{{  manageiq.service.split('/')[1] }}"
           fw_group_provisioning_change_number: 123
     register: group_dro
