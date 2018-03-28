@@ -10,7 +10,7 @@
 
   - name: Find the generic objects that belong to this service
     uri:
-      url: "{{ manageiq.api_url }}/api/{{ manageiq.service}}?attributes=generic_objects
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}?attributes=generic_objects"
       method: GET
       validate_certs: no
       headers:
