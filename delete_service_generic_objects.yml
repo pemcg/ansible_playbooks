@@ -11,12 +11,26 @@
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
       body_format: json
     register: service
     
   - set_fact:
       generic_objects: "{{ service.json.generic_objects }}"
+      
+  - name: Remove the resources from the service
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      body:
+        action: remove_resource
+        resource:
+          resource:
+            href: "{{ item.href }}"
+    with_items: "{{ generic_objects }}"
   
   - name: Delete the generic objects
     uri:
