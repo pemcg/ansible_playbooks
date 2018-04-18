@@ -4,6 +4,7 @@
 
   vars:
   - firewall_action_dro_name: "{{ 'Firewall Action'|urlencode }}"
+  - association_hrefs: []
   
   tasks:
     
@@ -68,7 +69,7 @@
 
   - name: Lookup the user's group
     uri:
-      url: "{{ manageiq.api_url }}/api/groups/{{ requester.json.current_group_id }}"
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.group }}"
       method: GET
       validate_certs: no
       headers:
@@ -128,9 +129,15 @@
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
     register: associations
-    
+
   - set_fact:
-      firewall_actions: associations.json.firewall_actions
+      association_hrefs: "{{ association_hrefs }} + [ '{{ item.href }}' ]"
+    with_items:
+      associations.json.firewall_actions
+  
+  # Add the new association href
+  - set_fact:
+      association_hrefs: "{{ association_hrefs }} + [ '{{ action_dro_href }}' ]"
     
   - name: Create the corresponding association in the Firewall Group back to the new action
     uri:
@@ -144,7 +151,7 @@
         action: edit
         associations:
           firewall_actions:
-          - href: "{{ action_dro_href }}"
+          - href: "{{ association_hrefs }}"
     register: output 
   
   - name: Register firewall action with the service
