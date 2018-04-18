@@ -1,4 +1,4 @@
-  ---
+---
 - name: List Variables
   hosts: localhost
 
