@@ -1,4 +1,0 @@
----
-dumpall_flat_mode: yes
-dumpall_guest_destination: /root/default_ansible.txt
-# dumpall_host_destination: /somewhere/local/

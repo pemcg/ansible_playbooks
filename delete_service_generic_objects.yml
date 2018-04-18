@@ -43,8 +43,3 @@
       body:
         action: delete
     with_items: "{{ generic_objects }}"
-
-
-  
-
-  

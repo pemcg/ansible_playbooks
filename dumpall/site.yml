@@ -1,7 +1,0 @@
----
-# This playbook dumps all variables
-
-- name: Dump all variables
-  hosts: all
-  roles:
-     - dumpall
