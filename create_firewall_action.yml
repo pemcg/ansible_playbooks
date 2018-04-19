@@ -121,11 +121,11 @@
     register: associations
 
   - set_fact:
-      association_hrefs: "{{ association_hrefs }} + [ "href": '{{ item.href }}' ]"
+      association_hrefs: "{{ association_hrefs }} + [ 'href': '{{ item.href }}' ]"
     with_items: "{{ associations.json.firewall_actions }}"
   # Add the new association href
   - set_fact:
-      association_hrefs: "{{ association_hrefs }} + [ "href": '{{ action_dro_href }}' ]"
+      association_hrefs: "{{ association_hrefs }} + [ 'href': '{{ action_dro_href }}' ]"
       
   - debug: var=association_hrefs
     
