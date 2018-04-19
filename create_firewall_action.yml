@@ -134,8 +134,7 @@
 
   - set_fact:
       association_hrefs: "{{ association_hrefs }} + [ '{{ item.href }}' ]"
-    with_items:
-      associations.json.firewall_actions
+    with_items: "{{ associations.json.firewall_actions }}"
   
   # Add the new association href
   - set_fact:
