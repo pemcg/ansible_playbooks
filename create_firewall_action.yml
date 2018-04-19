@@ -130,7 +130,7 @@
       body_format: json
     register: associations
     
-  - debug: var=associations.json.firewall_actions
+  #- debug: var=associations.json.firewall_actions
 
   - set_fact:
       association_hrefs: "{{ association_hrefs }} + [ '{{ item.href }}' ]"
@@ -139,6 +139,8 @@
   # Add the new association href
   - set_fact:
       association_hrefs: "{{ association_hrefs }} + [ '{{ action_dro_href }}' ]"
+      
+  - debug: var=association_hrefs
     
   - name: Create the corresponding association in the Firewall Group back to the new action
     uri:
