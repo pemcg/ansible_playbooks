@@ -121,7 +121,7 @@
     #        "updated_at": "2018-04-05T16:49:34Z"
     #    }
     #],
-     uri:
+    uri:
       url: "{{ group_dro_href }}?associations=firewall_actions"
       method: GET
       validate_certs: no
