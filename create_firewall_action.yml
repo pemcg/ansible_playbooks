@@ -119,13 +119,17 @@
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
     register: associations
+    
   # Extract the exiting association hrefs into their own list
   - set_fact:
-      association_hrefs: "{{ association_hrefs + [ { 'href': '{{ item.href }}' } ] }}"
+      association_hrefs: "{{ association_hrefs + [ { 'href': item.href } ] }}"
     with_items: "{{ associations.json.firewall_actions }}"
+
+  - debug: var=association_hrefs
+  
   # Add the new association href to the lost
   - set_fact:
-      association_hrefs: "{{ association_hrefs + [ { 'href': '{{ action_dro_href }}' } ] }}"
+      association_hrefs: "{{ association_hrefs + [ { 'href': action_dro_href } ] }}"
       
   - debug: var=association_hrefs
     
