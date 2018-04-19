@@ -129,6 +129,8 @@
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
     register: associations
+    
+  - debug: var=associations.json.firewall_actions
 
   - set_fact:
       association_hrefs: "{{ association_hrefs }} + [ '{{ item.href }}' ]"
