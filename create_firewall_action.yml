@@ -111,16 +111,6 @@
   - debug: var=action_dro_href
   
   - name: Get the existing firewall_actions associations of the Firewall Group
-    #  "firewall_actions": [
-    #    {
-    #        "href": "https://192.168.2.242/api/generic_objects/15",
-    #        "id": "15",
-    #        "name": "10.2.5.10",
-    #        "generic_object_definition_id": "2",
-    #        "created_at": "2018-04-05T16:49:34Z",
-    #        "updated_at": "2018-04-05T16:49:34Z"
-    #    }
-    #],
     uri:
       url: "{{ group_dro_href }}?associations=firewall_actions"
       method: GET
@@ -129,16 +119,13 @@
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
     register: associations
-    
-  #- debug: var=associations.json.firewall_actions
 
   - set_fact:
-      association_hrefs: "{{ association_hrefs }} + [ '{{ item.href }}' ]"
+      association_hrefs: "{{ association_hrefs }} + [ "href": '{{ item.href }}' ]"
     with_items: "{{ associations.json.firewall_actions }}"
-  
   # Add the new association href
   - set_fact:
-      association_hrefs: "{{ association_hrefs }} + [ '{{ action_dro_href }}' ]"
+      association_hrefs: "{{ association_hrefs }} + [ "href": '{{ action_dro_href }}' ]"
       
   - debug: var=association_hrefs
     
@@ -154,7 +141,7 @@
         action: edit
         associations:
           firewall_actions:
-          - href: "{{ association_hrefs }}"
+            "{{ association_hrefs }}"
     register: output 
   
   - name: Register firewall action with the service
