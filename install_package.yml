@@ -3,8 +3,10 @@
   hosts: all
   vars: 
     package: xyz
+    
+  roles:
+   - ansible-role-listvars
 
   tasks:
-
   - name: Install package
     yum: name={{ package }} state=present
