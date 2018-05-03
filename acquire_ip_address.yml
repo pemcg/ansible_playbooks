@@ -1,4 +1,5 @@
 ---
+- name: Acquire and Set an IP Address
   hosts: all
   gather_facts: no
   vars:
