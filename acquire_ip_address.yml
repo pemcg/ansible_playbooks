@@ -1,0 +1,30 @@
+---
+  hosts: all
+  gather_facts: no
+  vars:
+  - ip_addr: 192.168.2.66
+  - netmask: 255.255.255.0
+  - gateway: 192.168.2.1
+     
+  tasks:
+  - name: Update Request With New IP And Hostname Information
+    uri:
+      url: "{{ manageiq.api_url }}/api/request_tasks/{{ miq_provision_id }}"
+      method: POST
+      body_format: json
+      body:
+        action: edit
+        resource:
+          options:
+            addr_mode: ["static", "Static"]
+            ip_addr: "{{ ip_addr }}"
+            subnet_mask: "{{ netmask }}"
+            gateway: "{{ gateway }}"
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      status_code: 200
+    register: output
+    
+  - debug: var=output
