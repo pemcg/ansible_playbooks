@@ -7,6 +7,8 @@
   - gateway: 192.168.2.1
      
   tasks:
+  - debug: var=miq_provision_id
+  
   - name: Update Request With New IP And Hostname Information
     uri:
       url: "{{ manageiq.api_url }}/api/request_tasks/{{ miq_provision_id }}"
