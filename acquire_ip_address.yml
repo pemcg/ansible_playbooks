@@ -11,7 +11,7 @@
   - debug: var=miq_provision_id
   - debug: var=miq_provision_request_id
   
-  - name: Update Request With New IP And Hostname Information
+  - name: Update Request With New IP and Hostname Information
     uri:
       url: "{{ manageiq.api_url }}/api/provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
       method: POST
