@@ -4,31 +4,31 @@
   gather_facts: no
   vars:
   - ip_addr: 192.168.2.66
-  - netmask: 255.255.255.0
+  - netmask: 24
   - gateway: 192.168.2.254
+  - auto_commit: true
+  - manageiq_validate_certs: false
+      
+  roles:
+    - syncrou.manageiq-vmdb
      
   tasks:
   - debug: var=miq_provision_id
   - debug: var=miq_provision_request_id
   
-  - name: Update Request With New IP and Hostname Information
-    uri:
-      url: "{{ manageiq.api_url }}/api/provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
-      method: POST
-      body_format: json
-      body:
-        action: edit
-        resource:
-          options:
-            addr_mode: ["static", "Static"]
-            ip_addr: "{{ ip_addr }}"
-            subnet_mask: "{{ netmask }}"
-            gateway: "{{ gateway }}"
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-      status_code: 200
-    register: output
+  - name: Get the task vmdb object
+    manageiq_vmdb:
+      href: "provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
+    register: task_object
     
-  - debug: var=output
+  - name: Update Request with new IP and Hostname Information
+    manageiq_vmdb:
+      vmdb: "{{ task_object }}"
+      action: edit
+      data:
+        options:
+          addr_mode: ["static", "Static"]
+          ip_addr: "{{ ip_addr }}"
+          subnet_mask: "{{ netmask }}"
+          gateway: "{{ gateway }}"
+  
