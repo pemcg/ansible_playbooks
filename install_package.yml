@@ -2,7 +2,7 @@
 - name: Install Package
   hosts: all
   vars: 
-    package: xyz
+    package: from_playbook
     
   roles:
    - ansible-role-listvars
