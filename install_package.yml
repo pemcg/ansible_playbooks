@@ -1,6 +1,6 @@
 ---
 - name: Install Package
-  hosts: all
+  hosts: {{ inventory_hostname }}
   vars: 
     package: from_playbook
     
