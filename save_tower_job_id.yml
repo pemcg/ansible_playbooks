@@ -9,7 +9,6 @@
       
   roles:
   - syncrou.manageiq-automate
-  - ansible-role-listvars
 
   tasks:
   - name: "Set the job ID back into $evm.root"
