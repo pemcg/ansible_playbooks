@@ -8,5 +8,8 @@
    - ansible-role-listvars
 
   tasks:
+    
+  - debug: var=drop_down
+  
   - name: Install package
     yum: name={{ package }} state=present
