@@ -1,0 +1,23 @@
+---
+- name: Test Workspace interaction (2)
+  hosts: all
+  connection: local
+  
+  vars:
+  - manageiq_validate_certs: false
+  - auto_commit: true
+  
+  roles:
+  - syncrou.manageiq-automate
+
+  tasks:
+  - name: "Get an attribute"
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      get_attribute:
+        #object: "/ManageIQ/System/Request/call_instance"
+        object: "root"
+        attribute: "test"
+    register: test
+    
+  - debug: var=test
