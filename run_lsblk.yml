@@ -20,15 +20,6 @@
   - syncrou.manageiq-automate
   
   tasks:
-  - name: Connect to workspace using token
-    uri:
-      url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
-      method: GET
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-
   - name: Write the lsblk output to a state_var
     manageiq_automate:
       workspace: "{{ workspace }}"
