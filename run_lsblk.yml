@@ -21,19 +21,16 @@
   
   tasks:
   - name: Connect to workspace using token
-    local_action:
-      module: uri
-        url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
-        method: GET
-        validate_certs: no
-        headers:
-          X-Auth-Token: "{{ manageiq.api_token }}"
-        body_format: json
-      register: output
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
+      method: GET
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
 
   - name: Write the lsblk output to a state_var
-    local_action:
-    module: manageiq_automate
+    manageiq_automate:
       workspace: "{{ workspace }}"
       set_state_var:
         attribute: "lsblk_output"
