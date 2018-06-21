@@ -1,0 +1,40 @@
+---
+- name: Get lsblk output and return to automation engine
+  hosts: all
+  
+  tasks:
+  - name: Connect to VM and run lsblk
+    command: /usr/bin/lsblk
+    register: lsblk_output
+  
+- name: Write the lsblk output back to the workspace
+  hosts: localhost
+  connection: local
+  
+  vars:
+  - manageiq_validate_certs: false
+  - auto_commit: true
+  
+  roles:
+  - syncrou.manageiq-automate
+  
+  tasks:
+  - name: Connect to workspace using token
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.automate_workspace }}"
+      method: GET
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+    register: output
+
+  - name: Write the lsblk output to a state_var
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      set_state_var:
+        attribute: "lsblk_output"
+        value: "{{ lsblk_output }}"
+
+
+    
