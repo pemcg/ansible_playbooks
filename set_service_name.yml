@@ -1,0 +1,30 @@
+---
+- name: Set Service Name
+  hosts: all
+
+  tasks:
+  - set_fact:
+      timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
+      
+  - name: Get the existing service name
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: GET
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+    register: current_service
+ 
+  - name: Update the service name with appended timestamp
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      body:
+        action: edit
+        resource:
+          name: "{{ current_service.json.name }} {{ timestamp }}"
