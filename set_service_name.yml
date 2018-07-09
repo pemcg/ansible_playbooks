@@ -43,5 +43,5 @@
       body:
         action: delete
         resource:
-          href: "{{ current_service.json.name }} {{ timestamp }}"
+          href: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
 
