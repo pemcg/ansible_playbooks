@@ -30,7 +30,7 @@
           name: "{{ current_service.json.name }} {{ timestamp }}"
           
   - pause:
-    minutes: 1
+      minutes: 1
           
   - name: Now delete the service 
     uri:
