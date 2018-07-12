@@ -6,7 +6,6 @@
   - ip_addr: 192.168.2.66
   - netmask: 24
   - gateway: 192.168.2.254
-  - auto_commit: true
   - manageiq_validate_certs: false
       
   roles:
@@ -15,15 +14,10 @@
   tasks:
   - debug: var=miq_provision_id
   - debug: var=miq_provision_request_id
-  
-  - name: Get the task vmdb object
-    manageiq_vmdb:
-      href: "provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
-    register: task_object
     
   - name: Update Request with new IP and Hostname Information
     manageiq_vmdb:
-      vmdb: "{{ task_object }}"
+      href: "provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
       action: edit
       data:
         options:
