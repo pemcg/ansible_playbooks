@@ -1,10 +1,9 @@
 ---
-- name: save tower job id back to $evm.root
+- name: Save tower job id back to $evm.root
   hosts: all
   connection: local
 
   vars:
-  - auto_commit: true
   - manageiq_validate_certs: false
       
   roles:
