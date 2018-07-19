@@ -1,17 +1,11 @@
 ---
-- name: Write a message
-  hosts: localhost
+- name: Save the Tower Job ID
+  hosts: all
   connection: local
 
   vars:
-  - msg_string: "Default message string"
-  - manageiq_validate_certs: false
-  - auto_commit: true
-      
-  #tasks:
-  #- name: Display all variables/facts known for a host
-  #  debug:
-  #    var: hostvars[inventory_hostname]
+  - manageiq_validate_certs: false    
+
   roles:
   - syncrou.manageiq-automate
 
@@ -23,5 +17,3 @@
         object: "root"
         attribute: "tower_job_id"
         value:  "{{ tower_job_id }}"
-
-  - debug: msg="{{ msg_string }}"
