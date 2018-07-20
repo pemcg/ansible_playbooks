@@ -8,6 +8,7 @@
   - auto_commit: true
   
   roles:
+  - ansible-role-listvars
   - syncrou.manageiq-automate
 
   tasks:
