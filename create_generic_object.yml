@@ -14,11 +14,14 @@
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
       body_format: json
     register: go_definition
   
   - debug: var=go_definition.json.resources[0].href
+  - debug: var=go_name
+  - debug: var=attribute_1
+  - debug: var=attribute_2
+  - debug: var=association_vm
   
   - name: Create GO
     uri:
@@ -27,7 +30,6 @@
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
-        Content-Type:  application/json
       body_format: json
       body:
         action: create
@@ -37,8 +39,8 @@
         property_attributes:
           attribute_1: "{{ attribute_1 }}"
           attribute_2: "{{ attribute_2 }}"
-          attribute_3: false
+          attribute_3: "fixed"
         associations:
           vms:
-          - href_slug: "{{ association_vm }}"
+          - href: "{{ manageiq.api_url }}/api/{{ association_vm }}"
     register: new_go
