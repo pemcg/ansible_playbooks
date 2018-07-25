@@ -7,7 +7,7 @@
   - go_class_name: "{{ 'MyGOClass'|urlencode }}"
     
   tasks:
-  - name: Find the GO definition
+  - name: Find the generic object class definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_class_name }}'"
       method: GET
@@ -17,13 +17,7 @@
       body_format: json
     register: go_definition
   
-  - debug: var=go_definition.json.resources[0].href
-  - debug: var=go_name
-  - debug: var=attribute_1
-  - debug: var=attribute_2
-  - debug: var=association_vm
-  
-  - name: Create GO
+  - name: Create generic object
     uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
@@ -44,3 +38,17 @@
           vms:
           - href: "{{ manageiq.api_url }}/api/{{ association_vm }}"
     register: new_go
+    
+  - name: Add generic object to service
+    uri:
+      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+      method: POST
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+      body_format: json
+      body:
+        action: add_resource
+        resource:
+          resource:
+            href: "{{ new_go.json.results[0].href }}"
