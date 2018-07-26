@@ -3,7 +3,7 @@
   hosts: localhost
 
   vars:
-  - go_name: "{{ 'FirewallGroup'|urlencode }}"
+  - firewall_group_dro_name: "{{ 'Firewall Group'|urlencode }}"
 
   tasks:
     
@@ -22,18 +22,20 @@
           description: "Firewall Group {{ firewall_group_name }}"
     register: output
         
-  - name: Find the "FirewallGroup" go definition
+  - name: Find the "Firewall Group" DRO definition
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
+      url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ firewall_group_dro_name }}'"
       method: GET
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
-    register: go_definition
+    register: group_dro_definition
     
   - set_fact:
-      go_definition_href: "{{ go_definition.json.resources[0].href }}"
+      group_dro_definition_href: "{{ group_dro_definition.json.resources[0].href }}"
+  
+  #- debug: var=group_dro_definition_href
   
   - name: Lookup the requesting user
     uri:
@@ -62,7 +64,7 @@
   - set_fact:
       group_description: "{{ requester_group.json.description | default('') }}"
   
-  - name: Create the go entry
+  - name: Create the "Firewall Group" DRO entry
     uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
@@ -74,18 +76,21 @@
         action: create
         name: "{{ firewall_group_name }}"
         generic_object_definition:
-          href: "{{ go_definition_href }}"
+          href: "{{ group_dro_definition_href }}"
         property_attributes:
+          requester_department: "{{ group_description }}"
           requester: "{{ requester_name }}"
-          service_id: "{{ manageiq.service.split('/')[1] }}"
-          description: "{{ firewall_group_description }}"
-          provisioning_change_request: "{{ provisioning_change_request }}"
-    register: new_go
+          requester_email: "{{ requester_email }}"
+          service_id: "{{  manageiq.service.split('/')[1] }}"
+          fw_group_provisioning_change_number: 123
+    register: group_dro
     
   - set_fact:
-      new_go_href: "{{ new_go.json.results[0].href }}"
+      group_dro_href: "{{ group_dro.json.results[0].href }}"
     
-  - name: Register the new generic object with the service
+  #- debug: var=group_dro_href
+    
+  - name: Register firewall group with the service
     uri:
       url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
       method: POST
@@ -97,7 +102,8 @@
         action: add_resource
         resource:
           resource:
-            href: "{{ new_go_href }}"
+            href: "{{ group_dro_href }}"
     register: output
 
+  #- debug: var=output.json
     
