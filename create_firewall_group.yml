@@ -6,7 +6,6 @@
   - go_name: "{{ 'FirewallGroup'|urlencode }}"
 
   tasks:
-       
   - name: Find the "FirewallGroup" generic object definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
@@ -70,5 +69,3 @@
           resource:
             href: "{{ new_go_href }}"
     register: output
-
-    
