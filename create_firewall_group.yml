@@ -6,22 +6,7 @@
   - go_name: "{{ 'FirewallGroup'|urlencode }}"
 
   tasks:
-    
-  - name: Change the service name and description
-    uri:
-      url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
-      method: POST
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-      body:
-        action: edit
-        resource:
-          name: "{{ service_name }}"
-          description: "{{ service_description }}"
-    register: output
-        
+       
   - name: Find the "FirewallGroup" generic object definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
