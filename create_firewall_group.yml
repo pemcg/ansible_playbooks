@@ -18,8 +18,8 @@
       body:
         action: edit
         resource:
-          name: "{{ firewall_group_name }}"
-          description: "Firewall Group {{ firewall_group_name }}"
+          name: "Firewall Group: {{ firewall_group_name }}"
+          description: "Firewall Group: {{ firewall_group_name }}"
     register: output
         
   - name: Find the "FirewallGroup" go definition
@@ -47,20 +47,6 @@
     
   - set_fact:
       requester_name: "{{ requester.json.name | default('') }}"
-      requester_email: "{{ requester.json.email | default('') }}"
-    
-  - name: Lookup the user's group
-    uri:
-      url: "{{ manageiq.api_url }}/api/groups/{{ requester.json.current_group_id }}"
-      method: GET
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-    register: requester_group
-    
-  - set_fact:
-      group_description: "{{ requester_group.json.description | default('') }}"
   
   - name: Create the go entry
     uri:
