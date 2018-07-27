@@ -18,7 +18,7 @@
       body:
         action: edit
         resource:
-          name: "{service_name }}"
+          name: "{{ service_name }}"
           description: "{{ service_description }}"
     register: output
         
