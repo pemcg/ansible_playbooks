@@ -7,7 +7,7 @@
 
   tasks:
     
-  - name: Change the service name
+  - name: Change the service name and description
     uri:
       url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
       method: POST
@@ -18,11 +18,11 @@
       body:
         action: edit
         resource:
-          name: "Firewall Group: {{ firewall_group_name }}"
-          description: "Firewall Group: {{ firewall_group_name }}"
+          name: "{service_name }}"
+          description: "{{ service_description }}"
     register: output
         
-  - name: Find the "FirewallGroup" go definition
+  - name: Find the "FirewallGroup" generic object definition
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
       method: GET
@@ -48,7 +48,7 @@
   - set_fact:
       requester_name: "{{ requester.json.name | default('') }}"
   
-  - name: Create the go entry
+  - name: Create the generic object entry
     uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
