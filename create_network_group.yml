@@ -10,13 +10,16 @@
   tasks:
   - name: Lookup the parent "FirewallGroup" generic object supplied in the dialog
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_objects?expand=resources&filter[]=name='{{ firewall_group|urlencode }}'"
+      #url: "{{ manageiq.api_url }}/api/generic_objects?expand=resources&filter[]=name='{{ firewall_group|urlencode }}'"
+      url: "{{ manageiq.api_url }}/api/generic_objects/{{ firewall_group }}?expand=resources"
       method: GET
       validate_certs: no
       headers:
         X-Auth-Token: "{{ manageiq.api_token }}"
       body_format: json
     register: fwgroup_go
+    
+  - debug: var=fwgroup_go
     
   - set_fact:
       fwgroup_go_href: "{{ fwgroup_go.json.resources[0].href }}"
