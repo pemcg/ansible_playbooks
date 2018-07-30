@@ -69,6 +69,8 @@
       body_format: json
     register: associations
     
+  - debug: var=associations
+    
   # Extract the exiting association hrefs into their own list
   - set_fact:
       association_hrefs: "{{ association_hrefs + [ { 'href': item.href } ] }}"
@@ -88,6 +90,6 @@
       body:
         action: edit
         associations:
-          firewall_actions:
+          network_groups:
             "{{ association_hrefs }}"
     register: output 
