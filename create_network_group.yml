@@ -72,9 +72,12 @@
   - debug: var=associations
     
   # Extract the exiting association hrefs into their own list
-  - set_fact:
-      association_hrefs: "{{ association_hrefs + [ { 'href': item.href } ] }}"
-    with_items: "{{ associations.json.network_groups }}"
+  #- set_fact:
+  #    association_hrefs: "{{ association_hrefs + [ { 'href': item.href } ] }}"
+  #  with_items: "{{ associations.json.network_groups }}"
+  _ set_fact:
+      association_hrefs: "{{ association_hrefs + [ { 'href': item } ] }}"
+    with_items: "{{ associations|json_query('json.network_groups[*].href) }}
     
   - set_fact:
       association_hrefs: "{{ association_hrefs + [ { 'href': new_go_href } ] }}"
