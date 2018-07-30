@@ -3,17 +3,17 @@
   hosts: localhost
   
   vars:
-  - go_name: "{{ 'NetworkGroup'|urlencode }}"
+  - go_class: "{{ 'NetworkGroup'|urlencode }}"
   - association_hrefs: []
-  # Input vars from dialog: firewall_group, name, description, network
+  # Input vars from dialog: firewall_group, go_name, description, network
   
   tasks:
   - set_fact:
       fwgroup_go_href: "{{ manageiq.api_url }}/api/generic_objects/{{ firewall_group }}"
       
-  - name: "Find the {{ go_name }} generic object definition"
+  - name: "Find the {{ go_class }} generic object class definition"
     uri:
-      url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
+      url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_class }}'"
       method: GET
       validate_certs: no
       headers:
@@ -44,7 +44,7 @@
       body_format: json
       body:
         action: create
-        name: "{{ name }}"
+        name: "{{ go_name }}"
         generic_object_definition:
           href: "{{ go_definition_href }}"
         property_attributes:
