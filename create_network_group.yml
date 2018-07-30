@@ -21,7 +21,7 @@
   - set_fact:
       fwgroup_go_href: "{{ fwgroup_go.json.resources[0].href }}"
       
-  - name: Find the {{ go_name }} generic object definition
+  - name: "Find the {{ go_name }} generic object definition"
     uri:
       url: "{{ manageiq.api_url }}/api/generic_object_definitions?expand=resources&filter[]=name='{{ go_name }}'"
       method: GET
@@ -34,7 +34,7 @@
   - set_fact:
       go_definition_href: "{{ go_definition.json.resources[0].href }}"
       
-  - name: Create {{ go_name }} generic object
+  - name: "Create {{ go_name }} generic object"
     uri:
       url: "{{ manageiq.api_url }}/api/generic_objects"
       method: POST
