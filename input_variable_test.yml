@@ -5,7 +5,7 @@
   #- my_hash: "{{ hash_string | from_json }}"
   
   tasks:
-  - set_fact: myhash="{{ hash_string | from_json }}"
-  - debug: var=array
-  - debug: var=myhash
+  - set_fact: my_hash="{{ my_hash | from_json }}"
+  - debug: var=my_array
+  - debug: var=my_hash
   
