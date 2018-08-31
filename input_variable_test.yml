@@ -2,9 +2,10 @@
 - name: List Variables
   hosts: all
   vars:
-  #- hash: "{{ hash_string | from_json }}"
+  #- my_hash: "{{ hash_string | from_json }}"
   
-  tasks:    
+  tasks:
+  - set_fact: myhash="{{ hash_string | from_json }}"
   - debug: var=array
-  - debug: var=hash_string
+  - debug: var=myhash
   
