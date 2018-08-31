@@ -3,6 +3,6 @@
   hosts: all
   
   tasks:
-  - debug var=array
-  - debug var=(hash_string | from_json)
+  - debug: var=array
+  - debug: var=(hash_string | from_json)
   
