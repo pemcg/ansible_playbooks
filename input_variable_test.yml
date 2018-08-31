@@ -7,6 +7,8 @@
   tasks:
   #- set_fact: my_hash="{{ my_hash | from_json }}"
   - debug: var=my_array
-  - debug: msg="{{item.key}}: {{item.value}}"
+  - debug: var=string_hash
+  - debug: var=my_hash
+  - debug: msg="The key is {{ item.key }} and the value is {{ item.value }}"
     with_dict: "{{ my_hash }}"
   
