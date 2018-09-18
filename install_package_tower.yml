@@ -1,13 +1,15 @@
 ---
 - name: Install Package
-  hosts: all
+  hosts: "{{ vm_target_name }}"
   vars: 
     package: from_playbook
+    vm_target_name:
     
   roles:
    - ansible-role-listvars
 
   tasks:
+  - debug: msg="The Target VM Name is {{ vm_target_name }}"
   
   - name: Install package
     yum: name={{ package }} state=present
