@@ -14,7 +14,7 @@
       - https
       
   - firewalld:
-      port: "{{ item }}"/tcp
+      port: "{{ item }}/tcp"
       immediate: true
       permanent: true
       state: enabled
