@@ -5,7 +5,7 @@
   tasks:
     
   - name: Add the http/d firewall services
-    firewalld:
+     firewalld:
       service: "{{ item }}"
       immediate: true
       permanent: true
@@ -44,10 +44,12 @@
       state: present
       
   - name: Enable the ansible repository
-    rhsm_repository:
-      name: rhel-7-server-ansible-2-rpms
+    shell:
+      cmd: subscription-manager repos --enable=rhel-7-server-ansible-2-rpms
+    register: result
       
   - name: install ansible
     yum:
       name: ansible
       state: latest
+    when: result is success
