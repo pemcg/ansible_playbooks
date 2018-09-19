@@ -47,7 +47,7 @@
     rhsm_repository:
       name: rhel-7-server-ansible-2-rpms
       
-  - install ansible
+  - name: install ansible
     yum:
       name: ansible
       state: latest
