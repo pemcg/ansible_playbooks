@@ -1,0 +1,53 @@
+---
+- name: Setup Tower cluster nodes
+  hosts: all
+  
+  tasks:
+    
+  - name: Add the http/d firewall services
+  - firewalld:
+      service: "{{ item }}"
+      immediate: true
+      permanent: true
+      state: enabled
+    with_items:
+      - http
+      - https
+      
+  - name: Add the rabbitmq firewall ports
+    firewalld:
+      port: "{{ item }}/tcp"
+      immediate: true
+      permanent: true
+      state: enabled
+    with_items:
+      - 4369
+      - 25672
+      - 15672
+      
+  - name: Partition the second disk
+    parted:
+      device: /dev/vdb
+      number: 1
+      state: present
+      
+  - name: Format the second disk as xfs
+    filesystem:
+      fstype: xfs
+      dev: /dev/vdb1
+      
+  - name: Mount the second disk under /var/lib/awx
+    mount:
+      path: /var/lib/awx
+      src: /dev/vdb1
+      fstype: xfs
+      state: present
+      
+  - name: Enable the ansible repository
+    rhsm_repository:
+      name: rhel-7-server-ansible-2-rpms
+      
+  - install ansible
+    yum:
+      name: ansible
+      state: latest
