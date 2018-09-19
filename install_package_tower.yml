@@ -6,7 +6,7 @@
     vm_target_name:
     
   roles:
-   - ansible-role-listvars
+  - ansible-role-listvars
 
   tasks:
   - debug: msg="The Target VM Name is {{ vm_target_name }}"
