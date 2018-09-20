@@ -1,6 +1,8 @@
 ---
 - name: List Variables
-  hosts: localhost
+  hosts: "{{ vm_target_name }}"
+  vars: 
+    vm_target_name:
 
-  roles:
-     - ansible-role-listvars
+  tasks:
+  - debug: var=hostvars[inventory_hostname].cloudforms
