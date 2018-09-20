@@ -1,0 +1,6 @@
+---
+- name: List Variables
+  hosts: localhost
+
+  roles:
+     - ansible-role-listvars
