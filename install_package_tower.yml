@@ -13,3 +13,6 @@
   
   - name: Install package
     yum: name={{ package }} state=present
+    
+  - set_fact:
+      install_date: "{{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
