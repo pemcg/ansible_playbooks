@@ -2,7 +2,6 @@
 - name: Tag VM
   hosts: "{{ vm_target_name }}"
   vars: 
-    vm_target_name:
     user: admin
     password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
@@ -11,6 +10,7 @@
           36393562623936356135613230323066613439366362643638633634616534663964343634636233
           3363613539613766360a663833616665323831613034376661376234303763353665313164363334
           3934
+    vm_target_name:
 
   tasks:
   - debug: var=hostvars[inventory_hostname].cloudforms.href
@@ -25,8 +25,8 @@
       body_format: json
       body:
         action: assign
-        resource:
-          name: workload/database
+        resources:
+        - name: "/workload/database"
     register: output
     
   - debug: var=output
