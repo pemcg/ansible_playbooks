@@ -14,13 +14,16 @@
 
   tasks:
   - debug: var=hostvars[inventory_hostname].cloudforms.href
+  - debug: var=user
+  - debug: var=password
   
   - name: Tag the VM
     uri:
       url: "{{ hostvars[inventory_hostname].cloudforms.href }}/tags"
       method: POST
       validate_certs: no
-      user: "{{ user}}"
+      force_basic_auth: yes
+      user: "{{ user }}"
       password: "{{ password }}"
       body_format: json
       body:
