@@ -1,0 +1,19 @@
+---
+- name: Gtlab Operations
+  hosts: all
+  
+  tasks:
+  - name: Create Gitlab User
+    gitlab_user:
+      server_url: https://gitlab.com
+      validate_certs: True
+      login_user: pemcg
+      login_password: MySecretPassword
+      name: me
+      username: myusername
+      password: mysecretpassword
+      email: me@example.com
+      sshkey_name: MySSH
+      sshkey_file: ssh-rsa AAAAB3NzaC1yc
+      state: present
+    delegate_to: localhost
