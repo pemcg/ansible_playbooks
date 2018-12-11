@@ -1,6 +1,6 @@
 ---
 - name: Print the time
-  hosts: localhost
+  hosts: all
   
   tasks:
   - debug: msg="In Ansible method at {{ ansible_date_time.iso8601 }} "
