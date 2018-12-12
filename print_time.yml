@@ -1,6 +1,8 @@
 ---
 - name: Print the time
-  hosts: all
+  hosts: "{{ vm_target_name }}"
+  vars: 
+    vm_target_name:
   
   tasks:
-  - debug: msg="In Ansible method at {{ ansible_date_time.iso8601 }} "
+  - debug: msg="In Ansible task at {{ ansible_date_time.iso8601 }} "
