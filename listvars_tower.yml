@@ -1,6 +1,6 @@
 ---
 - name: List Variables on localhost
-  hosts: localhost
+  hosts: all
 
   tasks:
   - debug: var=hostvars[inventory_hostname]
