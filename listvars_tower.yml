@@ -1,4 +1,10 @@
 ---
+- name: List Variables on localhost
+  hosts: localhost
+
+  tasks:
+  - debug: var=hostvars[inventory_hostname]
+
 - name: List Variables
   hosts: "{{ vm_target_name }}"
   vars: 
