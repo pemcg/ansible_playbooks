@@ -7,8 +7,12 @@
     max_retries: 9
     retry_interval: 20
 
-  roles:
-    - ansible-role-listvars
+
+            # "ansible_env": {
+            # "OVIRT_INI_PATH": "/tmp/awx_6_uJBsqw/tmp59WpHz", 
+            # "OVIRT_PASSWORD": "smartvm", 
+            # "OVIRT_URL": "rhevm01.bit63.net", 
+            # "OVIRT_USERNAME": "admin@internal", 
 
   tasks:
     - name: Set the Provider URL
@@ -26,6 +30,8 @@
     - name: Obtain SSO token
       ovirt_auth:
         url: "{{ ovirt_url }}"
+        username: "{{ ansible_env.OVIRT_USERNAME }}"
+        password: "{{ ansible_env.OVIRT_PASSWORD }}"
         insecure: true
 
     - name: Create VM
