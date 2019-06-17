@@ -1,0 +1,196 @@
+---
+- name: manageiq-automate role example usage
+  hosts: localhost
+  connection: local
+  vars:
+  - object: root
+  - interval: 600
+
+  gather_facts: False
+  roles:
+  - syncrou.manageiq-automate
+
+  tasks:
+    
+  # Working with input parameters:
+  #      'method_parameter_exists'
+  #      'get_method_parameter'
+  #      'get_decrypted_method_parameter'
+  #      'get_method_parameters’
+    
+    - name: "Check a Method Parameter"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        method_parameter_exists:
+          parameter: "this"
+      register: method_parameter_exists
+    - debug: msg="method_parameter_exists:{{ method_parameter_exists.value }}"
+    
+    - name: "Get the list of Method Parameters"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_method_parameters: yes
+      register: get_method_parameters
+    - debug: msg="get_method_parameters:{{ get_method_parameters }}"
+    
+    - name: Decrypt a method_parameter from an object
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_method_parameter:
+          attribute: scrambled_this
+      register: decrypted_method_parameter
+    - debug: msg=decrypted_method_parameter:{{ decrypted_method_parameter }}
+      
+  # Working with attributes:
+  #      'attribute_exists':
+  # 	   'get_attribute'
+  #      'get_decrypted_attribute'
+  #      'set_attribute'
+  #      'set_attributes'
+  #      'set_encrypted_attribute'
+      
+    - name: "Check an attribute"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        attribute_exists:
+          object: "/ManageIQ/System/Request/call_instance"
+          attribute: "::miq::parent"
+      register: attribute_exists
+    - debug: msg="checked (existence) attribute:{{ attribute_exists.value }}"
+
+    - name: "Get an attribute"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: "/ManageIQ/System/Request/call_instance"
+          attribute: "::miq::parent"
+      register: get_attribute
+    - debug: msg="get_attribute:{{ get_attribute.value }}"
+    
+    - name: "Set a root attribute"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_attribute:
+          object: "root"
+          attribute: "my_name"
+          value:  "pemcg"
+      register: workspace
+
+    - name: "Set several root attributes"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_attributes:
+          object: "root"
+          attributes:
+            family_name: "timmer"
+            eldest_son: "reed"
+            youngest_son: "olaf"
+      register: workspace
+
+    - name: "Get the full list of root object Attribute Names"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_attribute_names:
+          object: "root"
+      register: get_root_object_attribute_names
+    - debug: msg="get_root_object_attribute_names:{{ get_root_object_attribute_names.value }}"
+    
+    - name: "Get an attribute from a configuration domain"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: "/Configuration/OpenShift/Parameters/default"
+          attribute: "rhel_subscription_pool"
+      register: rhel_subscription_pool
+    - debug: msg="rhel_subscription_pool from configuration domain:{{ rhel_subscription_pool }}"
+
+    - name: Decrypt an attribute from an object
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_attribute:
+          object: root
+          attribute: fred
+      register: decrypted_attribute
+    - debug: msg=decrypted_attribute:{{ decrypted_attribute }}
+
+    - name: Encrypt an object attribute
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_encrypted_attribute:
+          object: root
+          attribute: freddy
+          value: 'smartvm'
+    
+    # Working with Objects:
+    #
+    #    'object_exists'
+    #    'get_object_attribute_names'
+    #    'get_object_names'
+    #    'get_vmdb_object'
+
+    - name: "Get the full list of Objects"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_names: yes
+      register: get_object_names
+    - debug: msg="get_object_names = {{ get_object_names }}"
+    
+    - name: "Get the full list of configuration domain Attribute Names"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_attribute_names:
+          object: "/Configuration/OpenShift/Parameters/default"
+      register: configuration_domain_attribute_names
+    - debug: msg="configuration_domain_attribute_names:{{ configuration_domain_attribute_names }}"
+
+    - name: Grab a vmdb object
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_vmdb_object:
+          object: root
+          attribute: miq_group
+      register: miq_group
+    - debug: msg=miq_group:{{ miq_group }}
+
+    # Working with state machines:
+    #
+    #        'set_retry'
+    #        'get_state_var_names'
+    #        'state_var_exists'
+    #        'get_state_var'
+    #        'set_state_var'
+    
+    - name: "Get the list of State Vars"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_state_var_names: yes
+      register: get_state_var_names
+    - debug: msg="get_state_var_names = {{ get_state_var_names.value }}"
+    
+    - name: "Check a state_var"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        state_var_exists:
+          attribute: "task_id"
+      register: state_var_exists
+    - debug: msg="state_var_exists:{{ state_var_exists.value }}"
+    
+    - name: "Set a State Var"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_state_var:
+          attribute: "job_id"
+          value: "xyz"
+      register: job_id
+    - debug: msg="job_id:{{ job_id }}"
+
+
+    
+
+          
+
+
+
+
+
+
