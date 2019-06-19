@@ -24,7 +24,7 @@
         method_parameter_exists:
           parameter: "this"
       register: method_parameter_exists
-    - debug: msg="method_parameter_exists:{{ method_parameter_exists.value }}"
+    - debug: msg="Check if a Method Parameter exists:{{ method_parameter_exists.value }}"
     
     - name: "Get the list of Method Parameters"
       manageiq_automate:
@@ -58,14 +58,14 @@
   #      'set_attributes'
   #      'set_encrypted_attribute'
       
-    - name: "Check an attribute"
+    - name: "Check that an attribute exists"
       manageiq_automate:
         workspace: "{{ workspace }}"
         attribute_exists:
           object: "/ManageIQ/System/Request/call_instance"
           attribute: "::miq::parent"
       register: attribute_exists
-    - debug: msg="checked (existence) attribute:{{ attribute_exists.value }}"
+    - debug: msg="Check that an attribute exists:{{ attribute_exists.value }}"
 
     - name: "Get an attribute"
       manageiq_automate:
