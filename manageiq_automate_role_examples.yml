@@ -2,8 +2,6 @@
 - name: manageiq-automate role example usage
   hosts: localhost
   connection: local
-  display_skipped_hosts: no
-  display_ok_hosts: no
   vars:
   - object: root
   - interval: 600
