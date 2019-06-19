@@ -18,65 +18,75 @@
   #      'get_method_parameter'
   #      'get_decrypted_method_parameter'
 
-    - name: "Check if a Method Parameter exists"
+    - name: "Check if a method parameter exists (method_parameter_exists)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         method_parameter_exists:
           parameter: "this"
       register: method_parameter_exists
-    - debug: msg="Check if a Method Parameter exists:{{ method_parameter_exists.value }}"
+    - debug: msg="Result:{{ method_parameter_exists.value }}"
     
-    - name: "Get the list of Method Parameters"
+    - name: "Get the list of method parameters (get_method_parameters)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_method_parameters: yes
       register: get_method_parameters
-    - debug: msg="get_method_parameters:{{ get_method_parameters.value }}"
+    - debug: msg="Result:{{ get_method_parameters.value }}"
     
-    - name: "Get a Method Parameter"
+    - name: "Get a method parameter (get_method_parameter)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_method_parameter:
           parameter: "this"
       register: this_method_parameter
-    - debug: msg="get_method_parameter:{{ this_method_parameter.value }}"
-    - debug: msg="the same from a built-in var:{{ this }}"
+    - debug: msg="Result:{{ this_method_parameter.value }}"
+    - debug: msg="(The same from a built-in var:{{ this }})"
     
-    - name: Decrypt a method_parameter
+    - name: "Decrypt a method_parameter (get_decrypted_method_parameter)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_method_parameter:
           attribute: scrambled_this
       register: decrypted_method_parameter
-    - debug: msg=decrypted_method_parameter:{{ decrypted_method_parameter.value }}
+    - debug: msg=Result:{{ decrypted_method_parameter.value }}
       
   # Working with attributes:
   #      'attribute_exists':
   # 	   'get_attribute'
   #      'get_decrypted_attribute'
+  #      'get_object_attribute_names'
   #      'set_attribute'
   #      'set_attributes'
   #      'set_encrypted_attribute'
       
-    - name: "Check that an attribute exists"
+    - name: "Check if an object/instance attribute exists (attribute_exists)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         attribute_exists:
           object: "/ManageIQ/System/Request/call_instance"
           attribute: "::miq::parent"
       register: attribute_exists
-    - debug: msg="Check that an attribute exists:{{ attribute_exists.value }}"
+    - debug: msg="Result:{{ attribute_exists.value }}"
 
-    - name: "Get an attribute"
+    - name: "Get an object/instance attribute (get_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_attribute:
           object: "/ManageIQ/System/Request/call_instance"
           attribute: "::miq::parent"
       register: get_attribute
-    - debug: msg="get_attribute:{{ get_attribute.value }}"
+    - debug: msg="Result:{{ get_attribute.value }}"
     
-    - name: "Set a root attribute"
+    - name: "Get an attribute from a configuration domain instance (get_attribute)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: "/Configuration/OpenShift/Parameters/default"
+          attribute: "rhel_subscription_pool"
+      register: rhel_subscription_pool
+    - debug: msg="Result:{{ rhel_subscription_pool.value }}"
+    
+    - name: "Set a root attribute (set_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_attribute:
@@ -85,7 +95,7 @@
           value:  "pemcg"
       register: workspace
 
-    - name: "Set several root attributes"
+    - name: "Set several root attributes (set_attributes)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_attributes:
@@ -96,33 +106,24 @@
             youngest_son: "olaf"
       register: workspace
 
-    - name: "Get the full list of root object Attribute Names"
+    - name: "Get the list of root object attribute names (get_object_attribute_names)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_attribute_names:
           object: "root"
-      register: get_root_object_attribute_names
-    - debug: msg="get_root_object_attribute_names:{{ get_root_object_attribute_names.value }}"
+      register: root_object_attribute_names
+    - debug: msg="Result:{{ root_object_attribute_names.value }}"
     
-    - name: "Get an attribute from a configuration domain"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-          object: "/Configuration/OpenShift/Parameters/default"
-          attribute: "rhel_subscription_pool"
-      register: rhel_subscription_pool
-    - debug: msg="rhel_subscription_pool from configuration domain:{{ rhel_subscription_pool }}"
-
-    - name: Decrypt an attribute from an object
+    - name: "Decrypt an attribute from an object (get_decrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_attribute:
           object: root
           attribute: fred
       register: decrypted_attribute
-    - debug: msg=decrypted_attribute:{{ decrypted_attribute }}
+    - debug: msg=Result:{{ decrypted_attribute }}
 
-    - name: Encrypt an object attribute
+    - name: "Encrypt an object attribute (set_encrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_encrypted_attribute:
@@ -137,29 +138,29 @@
     #    'get_object_names'
     #    'get_vmdb_object'
 
-    - name: "Get the full list of Objects"
+    - name: "Get the full list of objects/instances in the workspace (get_object_names)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_names: yes
-      register: get_object_names
-    - debug: msg="get_object_names = {{ get_object_names }}"
+      register: object_names
+    - debug: msg="Result:{{ object_names.value }}"
     
-    - name: "Get the full list of configuration domain Attribute Names"
+    - name: "Get the full list of configuration domain attribute names"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_attribute_names:
           object: "/Configuration/OpenShift/Parameters/default"
       register: configuration_domain_attribute_names
-    - debug: msg="configuration_domain_attribute_names:{{ configuration_domain_attribute_names }}"
+    - debug: msg="Result:{{ configuration_domain_attribute_names.value }}"
 
-    - name: Grab a vmdb object
+    - name: "Get a vmdb object (get_vmdb_object)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_vmdb_object:
           object: root
           attribute: miq_group
       register: miq_group
-    - debug: msg=miq_group:{{ miq_group }}
+    - debug: msg=Result:{{ miq_group.value }}
 
     # Working with state machines:
     #
@@ -169,29 +170,29 @@
     #        'get_state_var'
     #        'set_state_var'
     
-    - name: "Get the list of State Vars"
+    - name: "Get the list of state vars (get_state_var_names)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_state_var_names: yes
       register: get_state_var_names
-    - debug: msg="get_state_var_names = {{ get_state_var_names.value }}"
+    - debug: msg="Result:{{ get_state_var_names.value }}"
     
-    - name: "Check a state_var"
+    - name: "Check whether a state var exists (state_var_exists)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         state_var_exists:
           attribute: "task_id"
       register: state_var_exists
-    - debug: msg="state_var_exists:{{ state_var_exists.value }}"
+    - debug: msg="Result:{{ state_var_exists.value }}"
     
-    - name: "Set a State Var"
+    - name: "Set a state var (set_state_var)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_state_var:
           attribute: "job_id"
           value: "xyz"
-      register: job_id
-    - debug: msg="job_id:{{ job_id }}"
+      register: updated_workspace
+    - debug: msg="Result:{{ updated_workspace.workspace }}"
 
 
     
