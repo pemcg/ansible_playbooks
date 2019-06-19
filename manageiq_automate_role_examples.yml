@@ -40,7 +40,7 @@
           parameter: "this"
       register: this_method_parameter
     - debug: msg="get_method_parameter:{{ this_method_parameters.value }}"
-    - debug: msg="the same from a built-in var:{{ this }}
+    - debug: msg="the same from a built-in var:{{ this }}"
     
     - name: Decrypt a method_parameter
       manageiq_automate:
