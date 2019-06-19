@@ -14,11 +14,11 @@
     
   # Working with input parameters:
   #      'method_parameter_exists'
+  #      'get_method_parameters’
   #      'get_method_parameter'
   #      'get_decrypted_method_parameter'
-  #      'get_method_parameters’
-    
-    - name: "Check a Method Parameter"
+
+    - name: "Check if a Method Parameter exists"
       manageiq_automate:
         workspace: "{{ workspace }}"
         method_parameter_exists:
@@ -31,15 +31,24 @@
         workspace: "{{ workspace }}"
         get_method_parameters: yes
       register: get_method_parameters
-    - debug: msg="get_method_parameters:{{ get_method_parameters }}"
+    - debug: msg="get_method_parameters:{{ get_method_parameters.value }}"
     
-    - name: Decrypt a method_parameter from an object
+    - name: "Get a Method Parameter"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_method_parameter:
+          parameter: "this"
+      register: this_method_parameter
+    - debug: msg="get_method_parameter:{{ this_method_parameters.value }}"
+    - debug: msg="the same from a built-in var:{{ this }}
+    
+    - name: Decrypt a method_parameter
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_method_parameter:
           attribute: scrambled_this
       register: decrypted_method_parameter
-    - debug: msg=decrypted_method_parameter:{{ decrypted_method_parameter }}
+    - debug: msg=decrypted_method_parameter:{{ decrypted_method_parameter.value }}
       
   # Working with attributes:
   #      'attribute_exists':
