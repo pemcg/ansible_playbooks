@@ -49,6 +49,28 @@
           attribute: scrambled_this
       register: decrypted_method_parameter
     - debug: msg=Result:{{ decrypted_method_parameter.value }}
+    
+  # Working with Objects:
+  #
+  #    'object_exists'
+  #    'get_object_names'
+  #    'get_vmdb_object'
+
+    - name: "Get the full list of objects/instances in the workspace (get_object_names)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_names: yes
+      register: workspace_object_names
+    - debug: msg="Result:{{ workspace_object_names.value }}"
+    
+    - name: "Get a vmdb object (get_vmdb_object)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_vmdb_object:
+          object: root
+          attribute: miq_group
+      register: miq_group
+    - debug: msg=Result:{{ miq_group.value }}
       
   # Working with attributes:
   #      'attribute_exists':
@@ -77,6 +99,22 @@
       register: get_attribute
     - debug: msg="Result:{{ get_attribute.value }}"
     
+    - name: "Get the list of root object attribute names (get_object_attribute_names)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_attribute_names:
+          object: "root"
+      register: root_object_attribute_names
+    - debug: msg="Result:{{ root_object_attribute_names.value }}"
+    
+    - name: "Get the full list of configuration domain attribute names (get_object_attribute_names)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_attribute_names:
+          object: "/Configuration/OpenShift/Parameters/default"
+      register: configuration_domain_attribute_names
+    - debug: msg="Result:{{ configuration_domain_attribute_names.value }}"
+    
     - name: "Get an attribute from a configuration domain instance (get_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
@@ -93,7 +131,8 @@
           object: "root"
           attribute: "my_name"
           value:  "pemcg"
-      register: workspace
+      register: updated_workspace
+    - debug: msg="Result:{{ updated_workspace.workspace }}"
 
     - name: "Set several root attributes (set_attributes)"
       manageiq_automate:
@@ -104,26 +143,10 @@
             family_name: "timmer"
             eldest_son: "reed"
             youngest_son: "olaf"
-      register: workspace
-
-    - name: "Get the list of root object attribute names (get_object_attribute_names)"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_object_attribute_names:
-          object: "root"
-      register: root_object_attribute_names
-    - debug: msg="Result:{{ root_object_attribute_names.value }}"
-    
-    - name: "Decrypt an attribute from an object (get_decrypted_attribute)"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_decrypted_attribute:
-          object: root
-          attribute: fred
-      register: decrypted_attribute
-    - debug: msg=Result:{{ decrypted_attribute }}
-
-    - name: "Encrypt an object attribute (set_encrypted_attribute)"
+      register: updated_workspace
+    - debug: msg="Result:{{ updated_workspace.workspace }}"
+      
+      - name: "Encrypt an object attribute (set_encrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_encrypted_attribute:
@@ -131,37 +154,15 @@
           attribute: freddy
           value: 'smartvm'
     
-    # Working with Objects:
-    #
-    #    'object_exists'
-    #    'get_object_attribute_names'
-    #    'get_object_names'
-    #    'get_vmdb_object'
-
-    - name: "Get the full list of objects/instances in the workspace (get_object_names)"
+    - name: "Decrypt an attribute from an object (get_decrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
-        get_object_names: yes
-      register: object_names
-    - debug: msg="Result:{{ object_names.value }}"
-    
-    - name: "Get the full list of configuration domain attribute names"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_object_attribute_names:
-          object: "/Configuration/OpenShift/Parameters/default"
-      register: configuration_domain_attribute_names
-    - debug: msg="Result:{{ configuration_domain_attribute_names.value }}"
-
-    - name: "Get a vmdb object (get_vmdb_object)"
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_vmdb_object:
+        get_decrypted_attribute:
           object: root
-          attribute: miq_group
-      register: miq_group
-    - debug: msg=Result:{{ miq_group.value }}
-
+          attribute: freddy
+      register: decrypted_attribute
+    - debug: msg=Result:{{ decrypted_attribute.value }}
+    
     # Working with state machines:
     #
     #        'set_retry'
