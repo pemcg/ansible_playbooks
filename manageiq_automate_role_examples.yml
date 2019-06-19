@@ -80,7 +80,7 @@
           attribute: "{{ item }}"
       loop: "{{ root_object_attribute_names }}"
       register: objects
-      debug: msg=Result:{{ objects.value }}
+    - debug: msg=Result:{{ objects.value }}
 
   # Working with attributes:
   #      'attribute_exists':
