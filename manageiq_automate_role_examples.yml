@@ -78,11 +78,10 @@
         get_vmdb_object:
           object: root
           attribute: "{{ item }}"
-      register: object
-      debug: msg=Result:{{ object.value }}
       loop: "{{ root_object_attribute_names }}"
+      register: objects
+      debug: msg=Result:{{ objects.value }}
 
-      
   # Working with attributes:
   #      'attribute_exists':
   # 	   'get_attribute'
