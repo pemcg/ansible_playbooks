@@ -86,7 +86,7 @@
         root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
       loop: "{{ root_attributes.results }}"
       
-    - debug: msg="root objects: {{ root_objects }}"
+    - debug: msg="root objects:{{ root_objects }}"
     
     - name: "Get the root object's href'able attributes as objects (get_vmdb_object)"
       manageiq_automate:
