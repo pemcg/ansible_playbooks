@@ -70,7 +70,7 @@
         get_object_attribute_names:
           object: "root"
       register: root_object_attribute_names
-      debug: msg="Result:{{ root_object_attribute_names.value }}"
+    - debug: msg="Result:{{ root_object_attribute_names.value }}"
     
     - name: "Get each of the root object's attributes as objects (get_vmdb_object)"
       manageiq_automate:
