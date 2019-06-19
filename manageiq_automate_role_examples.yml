@@ -146,20 +146,20 @@
       register: updated_workspace
     - debug: msg="Result:{{ updated_workspace.workspace }}"
       
-      - name: "Encrypt an object attribute (set_encrypted_attribute)"
+    - name: "Encrypt an object attribute (set_encrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_encrypted_attribute:
           object: root
-          attribute: freddy
-          value: 'smartvm'
+          attribute: 'rolling_stone'
+          value: 'keith'
     
     - name: "Decrypt an attribute from an object (get_decrypted_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_attribute:
           object: root
-          attribute: freddy
+          attribute: 'rolling_stone'
       register: decrypted_attribute
     - debug: msg=Result:{{ decrypted_attribute.value }}
     
