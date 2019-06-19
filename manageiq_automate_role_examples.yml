@@ -72,15 +72,25 @@
       register: root_object_attribute_names
     - debug: msg="Result:{{ root_object_attribute_names.value }}"
     
-    - name: "Get each of the root object's attributes as objects (get_vmdb_object)"
+    - name: "Get each of the root object's attributes (get_attribute)"
       manageiq_automate:
         workspace: "{{ workspace }}"
-        get_vmdb_object:
+        get_attribute:
           object: root
           attribute: "{{ item }}"
       loop: "{{ root_object_attribute_names.value }}"
-      register: objects
-    - debug: msg=Result:{{ objects.value }}
+      register: attributes
+    - debug: msg=Result:{{ attributes.value }}
+    
+    #- name: "Get each of the root object's attributes as objects (get_vmdb_object)"
+    #  manageiq_automate:
+    #    workspace: "{{ workspace }}"
+    #    get_vmdb_object:
+    #      object: root
+    #      attribute: "{{ item }}"
+    #  loop: "{{ root_object_attribute_names.value }}"
+    #  register: objects
+    #- debug: msg=Result:{{ objects.value }}
 
   # Working with attributes:
   #      'attribute_exists':
