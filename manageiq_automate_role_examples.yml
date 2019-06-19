@@ -2,6 +2,8 @@
 - name: manageiq-automate role example usage
   hosts: localhost
   connection: local
+  display_skipped_hosts: no
+  display_ok_hosts: no
   vars:
   - object: root
   - interval: 600
@@ -78,12 +80,14 @@
         get_attribute:
           object: root
           attribute: "{{ item }}"
+      no_log: True
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
       
     - name: Extract the attribute names and values into a list
       set_fact:
         root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
+      no_log: True
       loop: "{{ root_attributes.results }}"
       
     - debug: msg="root objects:{{ root_objects }}"
@@ -94,6 +98,7 @@
         get_vmdb_object:
           object: root
           attribute: "{{ item }}"
+      no_log: True
       loop: "{{ root_attributes.results | select('match', '^(eth|wlan)[0-9]+') | list }}"
      # loop: "{{ root_object_attribute_names.value }}"
       register: objects
