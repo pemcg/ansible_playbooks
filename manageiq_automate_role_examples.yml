@@ -83,7 +83,7 @@
       
     - name: Print the attribute names and values
       debug:
-        msg: "Result:{{ item.name }}: {{ item.value }}"
+        msg: "Result:{{ item.item }}: {{ item.value }}"
       loop: "{{ root_attributes.results }}"
     
     - name: "Get the root object's href'able attributes as objects (get_vmdb_object)"
