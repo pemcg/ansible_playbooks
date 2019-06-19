@@ -80,7 +80,7 @@
           attribute: "{{ item }}"
       loop: "{{ root_object_attribute_names.value }}"
       register: attributes
-    - debug: msg=Result:{{ attributes.value }}
+    - debug: msg=Result:{{ attributes }}
     
     #- name: "Get each of the root object's attributes as objects (get_vmdb_object)"
     #  manageiq_automate:
