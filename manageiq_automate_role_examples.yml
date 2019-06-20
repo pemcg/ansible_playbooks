@@ -54,7 +54,7 @@
   #
   #    'object_exists'
   #    'get_object_names'
-  #      'get_object_attribute_names'
+  #    'get_object_attribute_names'
   #    'get_vmdb_object'
 
     - name: Get the full list of objects/instances in the workspace (get_object_names)
@@ -82,6 +82,16 @@
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
     - debug: msg="root attributes:{{ root_attributes }}"
+    
+    - name: Check if the discovered root attributes actually exist (attribute_exists)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        attribute_exists:
+          object: root
+          attribute: "{{ item }}"
+      loop: "{{ root_attributes }}"
+      register: root_attributes_exist
+    - debug: msg="Result:{{ root_attributes_exist }}
       
     - name: Extract the attribute names containing 'href_slug', and values into a list
       set_fact:
@@ -100,7 +110,7 @@
       #no_log: True
       loop: "{{ root_objects|dict2items }}"
       register: objects
-    - debug: msg=Result:{{ objects|dict2items }}
+    - debug: msg="Result:{{ objects|dict2items }}"
 
   # Working with attributes:
   #      'attribute_exists':
