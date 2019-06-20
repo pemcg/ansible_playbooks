@@ -204,6 +204,14 @@
       register: state_var_exists
     - debug: msg="Result:{{ state_var_exists.value }}"
     
+    - name: Get the value of the "task_id" state var (get_state_var)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_state_var:
+          attribute: "task_id"
+      register: state_var
+    - debug: msg="Result:{{ state_var.value }}"
+    
     - name: Set a "job_id" state var (set_state_var)
       manageiq_automate:
         workspace: "{{ workspace }}"
