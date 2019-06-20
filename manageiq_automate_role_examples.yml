@@ -18,14 +18,14 @@
   #      'get_method_parameter'
   #      'get_decrypted_method_parameter'
 
-    - name: "Get the list of method parameters (get_method_parameters)"
+    - name: Get the list of method parameters (get_method_parameters)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_method_parameters: yes
       register: get_method_parameters
     - debug: msg="Result:{{ get_method_parameters.value }}"
 
-    - name: "Check if a method parameter exists (method_parameter_exists)"
+    - name: Check if a method parameter called 'this' exists (method_parameter_exists)
       manageiq_automate:
         workspace: "{{ workspace }}"
         method_parameter_exists:
@@ -33,7 +33,7 @@
       register: method_parameter_exists
     - debug: msg="Result:{{ method_parameter_exists.value }}"
     
-    - name: "Get a method parameter (get_method_parameter)"
+    - name: Get the value of a method parameter called 'this' (get_method_parameter)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_method_parameter:
@@ -42,7 +42,7 @@
     - debug: msg="Result:{{ this_method_parameter.value }}"
     - debug: msg="(The same from a built-in var:{{ this }})"
     
-    - name: "Decrypt a method_parameter (get_decrypted_method_parameter)"
+    - name: Decrypt a method_parameter called 'scrambled_this' (get_decrypted_method_parameter)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_method_parameter:
@@ -57,14 +57,14 @@
   #      'get_object_attribute_names'
   #    'get_vmdb_object'
 
-    - name: "Get the full list of objects/instances in the workspace (get_object_names)"
+    - name: Get the full list of objects/instances in the workspace (get_object_names)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_names: yes
       register: workspace_object_names
     - debug: msg="Result:{{ workspace_object_names.value }}"
     
-    - name: "Get the list of root object attribute names (get_object_attribute_names)"
+    - name: Get the list of root object attribute names (get_object_attribute_names)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_attribute_names:
@@ -72,7 +72,7 @@
       register: root_object_attribute_names
     - debug: msg="Result:{{ root_object_attribute_names.value }}"
     
-    - name: "Get each of the root object's attributes (get_attribute)"
+    - name: Get each of the root object's attributes (get_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_attribute:
@@ -90,7 +90,7 @@
       when: item.value|regex_search('(href_slug)')
     - debug: msg="root objects:{{ root_objects }}"
     
-    - name: "Get the root object's href'able attributes as objects (get_vmdb_object)"
+    - name: Get the root object's href'able attributes as objects (get_vmdb_object)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_vmdb_object:
@@ -110,7 +110,7 @@
   #      'set_attributes'
   #      'set_encrypted_attribute'
       
-    - name: "Check if an object/instance attribute exists (attribute_exists)"
+    - name: Check if an object/instance attribute exists (attribute_exists)
       manageiq_automate:
         workspace: "{{ workspace }}"
         attribute_exists:
@@ -119,7 +119,7 @@
       register: attribute_exists
     - debug: msg="Result:{{ attribute_exists.value }}"
 
-    - name: "Get an object/instance attribute (get_attribute)"
+    - name: Get the "::miq::parent" object/instance attribute (get_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_attribute:
@@ -128,7 +128,7 @@
       register: get_attribute
     - debug: msg="Result:{{ get_attribute.value }}"
     
-    - name: "Get the full list of configuration domain attribute names (get_object_attribute_names)"
+    - name: Get the full list of configuration domain attribute names (get_object_attribute_names)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_object_attribute_names:
@@ -136,7 +136,7 @@
       register: configuration_domain_attribute_names
     - debug: msg="Result:{{ configuration_domain_attribute_names.value }}"
     
-    - name: "Get an attribute from a configuration domain instance (get_attribute)"
+    - name: Get the "rhel_subscription_pool" attribute from a configuration domain instance (get_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_attribute:
@@ -145,42 +145,44 @@
       register: rhel_subscription_pool
     - debug: msg="Result:{{ rhel_subscription_pool.value }}"
     
-    - name: "Set a root attribute (set_attribute)"
+    - name: Set a "vm_name" root attribute (set_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_attribute:
           object: "root"
-          attribute: "my_name"
-          value:  "pemcg"
+          attribute: "vm_name"
+          value:  "pemcg-rhel7-002"
       register: updated_workspace
     - debug: msg="Result:{{ updated_workspace.workspace }}"
 
-    - name: "Set several root attributes (set_attributes)"
+    - name: Set several root attributes (set_attributes)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_attributes:
           object: "root"
           attributes:
-            family_name: "timmer"
-            eldest_son: "reed"
-            youngest_son: "olaf"
+            ipam_ip_address: "192.168.1.23"
+            ipam_netmask: "255.255.255.0"
+            ipam_gateway: "192.168.2.254"
       register: updated_workspace
     - debug: msg="Result:{{ updated_workspace.workspace }}"
       
-    - name: "Encrypt an object attribute (set_encrypted_attribute)"
+    - name: Encrypt a "root_password" object attribute (set_encrypted_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_encrypted_attribute:
           object: root
-          attribute: 'rolling_stone'
-          value: 'keith'
+          attribute: "root_password"
+          value: "very_secret"
+      register: updated_workspace
+    - debug: msg="Result:{{ updated_workspace.workspace }}"
     
-    - name: "Decrypt an attribute from an object (get_decrypted_attribute)"
+    - name: Decrypt an attribute from an object (get_decrypted_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_attribute:
           object: root
-          attribute: 'rolling_stone'
+          attribute: "root_password"
       register: decrypted_attribute
     - debug: msg=Result:{{ decrypted_attribute.value }}
     
@@ -192,14 +194,14 @@
     #        'get_state_var'
     #        'set_state_var'
     
-    - name: "Get the list of state vars (get_state_var_names)"
+    - name: Get the list of state vars (get_state_var_names)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_state_var_names: yes
       register: get_state_var_names
     - debug: msg="Result:{{ get_state_var_names.value }}"
     
-    - name: "Check whether a state var exists (state_var_exists)"
+    - name: Check whether a "task_id" state var exists (state_var_exists)
       manageiq_automate:
         workspace: "{{ workspace }}"
         state_var_exists:
@@ -207,12 +209,12 @@
       register: state_var_exists
     - debug: msg="Result:{{ state_var_exists.value }}"
     
-    - name: "Set a state var (set_state_var)"
+    - name: Set a "job_id" state var (set_state_var)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_state_var:
           attribute: "job_id"
-          value: "xyz"
+          value: "68008"
       register: updated_workspace
     - debug: msg="Result:{{ updated_workspace.workspace }}"
 
