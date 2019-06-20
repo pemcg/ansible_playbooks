@@ -96,10 +96,10 @@
         get_vmdb_object:
           object: root
           attribute: "{{ item.key }}"
-      no_log: True
+      #no_log: True
       loop: "{{ root_objects|dict2items }}"
       register: objects
-    - debug: msg=Result:{{ objects.value }}
+    - debug: msg=Result:{{ objects }}
 
   # Working with attributes:
   #      'attribute_exists':
