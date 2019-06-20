@@ -72,6 +72,16 @@
       register: root_object_attribute_names
     - debug: msg="Result:{{ root_object_attribute_names.value }}"
     
+    - name: Check if the discovered root attributes actually exist (attribute_exists)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        attribute_exists:
+          object: root
+          attribute: "{{ item }}"
+      loop: "{{ root_object_attribute_names.value }}"
+      register: root_attributes_exist
+    - debug: msg="Result:{{ root_attributes_exist }}"
+    
     - name: Get each of the root object's attributes (get_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
@@ -83,16 +93,6 @@
       register: root_attributes
     - debug: msg="root attributes:{{ root_attributes.results }}"
     
-    - name: Check if the discovered root attributes actually exist (attribute_exists)
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        attribute_exists:
-          object: root
-          attribute: "{{ item }}"
-      loop: "{{ root_attributes.results }}"
-      register: root_attributes_exist
-    - debug: msg="Result:{{ root_attributes_exist }}"
-      
     - name: Extract the attribute names containing 'href_slug', and values into a list
       set_fact:
         root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
