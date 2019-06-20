@@ -81,6 +81,7 @@
       ignore_errors: yes
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
+    - debug: msg="root attributes:{{ root_attributes }}"
       
     - name: Extract the attribute names containing 'href_slug', and values into a list
       set_fact:
