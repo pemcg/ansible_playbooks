@@ -87,6 +87,7 @@
         root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
       no_log: True
       loop: "{{ root_attributes.results }}"
+      when: item.value | regex_search('(href_slug)')
       
     - debug: msg="root objects:{{ root_objects }}"
     
@@ -97,8 +98,7 @@
           object: root
           attribute: "{{ item }}"
       no_log: True
-      loop: "{{ root_attributes.results | select('match', '^(eth|wlan)[0-9]+') | list }}"
-     # loop: "{{ root_object_attribute_names.value }}"
+      loop: "{{ root_objects }}"
       register: objects
     - debug: msg=Result:{{ objects.value }}
 
