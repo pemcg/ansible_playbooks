@@ -71,44 +71,19 @@
           object: "root"
       register: root_object_attribute_names
     - debug: msg="Result:{{ root_object_attribute_names.value }}"
-    
-    - name: Check if the discovered root attributes actually exist (attribute_exists)
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        attribute_exists:
-          object: root
-          attribute: "{{ item }}"
-      loop: "{{ root_object_attribute_names.value }}"
-      register: root_attributes_exist
-    - debug: msg="Result:{{ root_attributes_exist }}"
-    
-    - name: Get each of the root object's attributes (get_attribute)
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-          object: root
-          attribute: "{{ item }}"
-      ignore_errors: yes
-      loop: "{{ root_object_attribute_names.value }}"
-      register: root_attributes
-    - debug: msg="root attributes:{{ root_attributes.results }}"
-    
-    - name: Extract the attribute names containing 'href_slug', and values into a list
-      set_fact:
-        root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
-      # no_log: True
-      loop: "{{ root_attributes.results }}"
-      when: item.value|regex_search('(href_slug)')
-    - debug: msg="root objects:{{ root_objects }}"
-    
+       
     - name: Get the root object's href'able attributes as objects (get_vmdb_object)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_vmdb_object:
           object: root
-          attribute: "{{ item.key }}"
+          attribute: "{{ item }}"
       #no_log: True
-      loop: "{{ root_objects|dict2items }}"
+      loop: 
+        - miq_server
+        - user
+        - miq_group
+        - tenant
       register: objects
     - debug: msg="Result:{{ objects|dict2items }}"
 
