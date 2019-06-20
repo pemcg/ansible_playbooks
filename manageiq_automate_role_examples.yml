@@ -81,7 +81,7 @@
       ignore_errors: yes
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
-    - debug: msg="root attributes:{{ root_attributes }}"
+    - debug: msg="root attributes:{{ root_attributes.results }}"
     
     - name: Check if the discovered root attributes actually exist (attribute_exists)
       manageiq_automate:
@@ -89,7 +89,7 @@
         attribute_exists:
           object: root
           attribute: "{{ item }}"
-      loop: "{{ root_attributes }}"
+      loop: "{{ root_attributes.results }}"
       register: root_attributes_exist
     - debug: msg="Result:{{ root_attributes_exist }}"
       
