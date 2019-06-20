@@ -99,7 +99,7 @@
       #no_log: True
       loop: "{{ root_objects|dict2items }}"
       register: objects
-    - debug: msg=Result:{{ objects }}
+    - debug: msg=Result:{{ objects|dict2items }}
 
   # Working with attributes:
   #      'attribute_exists':
@@ -175,7 +175,7 @@
           attribute: "root_password"
           value: "very_secret"
       register: updated_workspace
-    - debug: msg="Result:{{ updated_workspace.workspace }}"
+    - debug: msg="Result:{{ updated_workspace }}"
     
     - name: Decrypt an attribute from an object (get_decrypted_attribute)
       manageiq_automate:
