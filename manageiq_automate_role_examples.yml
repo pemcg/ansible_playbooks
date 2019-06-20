@@ -78,7 +78,7 @@
         get_vmdb_object:
           object: root
           attribute: "{{ item }}"
-      #no_log: True
+      no_log: True
       loop: 
         - miq_server
         - user
@@ -131,6 +131,15 @@
       register: rhel_subscription_pool
     - debug: msg="Result:{{ rhel_subscription_pool.value }}"
     
+    - name: Get the value of the "ipam_url" attribute defined by a prior Ruby method (get_attribute)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: root
+          attribute: "ipam_url"
+      register: ipam_url
+    - debug: msg="Result:{{ ipam_url.value }}"
+    
     - name: Set a "vm_name" root attribute (set_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
@@ -138,10 +147,10 @@
           object: "root"
           attribute: "vm_name"
           value:  "pemcg-rhel7-002"
-      register: updated_workspace
-    - debug: msg="Result:{{ updated_workspace.workspace }}"
+    #  register: updated_workspace
+    #- debug: msg="Result:{{ updated_workspace.workspace }}"
 
-    - name: Set several root attributes (set_attributes)
+    - name: Set several IPAM-related root attributes (set_attributes)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_attributes:
@@ -150,8 +159,8 @@
             ipam_ip_address: "192.168.1.23"
             ipam_netmask: "255.255.255.0"
             ipam_gateway: "192.168.2.254"
-      register: updated_workspace
-    - debug: msg="Result:{{ updated_workspace.workspace }}"
+    #  register: updated_workspace
+    #- debug: msg="Result:{{ updated_workspace.workspace }}"
       
     - name: Encrypt a "root_password" object attribute (set_encrypted_attribute)
       manageiq_automate:
@@ -160,8 +169,8 @@
           object: root
           attribute: "root_password"
           value: "very_secret"
-      register: updated_workspace
-    - debug: msg="Result:{{ updated_workspace }}"
+    #  register: updated_workspace
+    #- debug: msg="Result:{{ updated_workspace }}"
     
     - name: Decrypt an attribute from an object (get_decrypted_attribute)
       manageiq_automate:
@@ -201,8 +210,8 @@
         set_state_var:
           attribute: "job_id"
           value: "68008"
-      register: updated_workspace
-    - debug: msg="Result:{{ updated_workspace.workspace }}"
+    #  register: updated_workspace
+    #- debug: msg="Result:{{ updated_workspace.workspace }}"
 
 
     
