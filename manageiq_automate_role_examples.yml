@@ -91,7 +91,7 @@
           attribute: "{{ item }}"
       loop: "{{ root_attributes }}"
       register: root_attributes_exist
-    - debug: msg="Result:{{ root_attributes_exist }}
+    - debug: msg="Result:{{ root_attributes_exist }}"
       
     - name: Extract the attribute names containing 'href_slug', and values into a list
       set_fact:
