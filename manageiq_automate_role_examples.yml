@@ -153,13 +153,13 @@
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
       
-    - name: Encrypt a "root_password" object attribute (set_encrypted_attribute)
+    - name: Encrypt a "root_passwd" object attribute (set_encrypted_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_encrypted_attribute:
           object: root
-          attribute: "root_password"
-          value: "very_secret"
+          attribute: "root_passwd"
+          value: "very_very_secret"
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace }}"
     
@@ -168,7 +168,7 @@
         workspace: "{{ workspace }}"
         get_decrypted_attribute:
           object: root
-          attribute: "root_password"
+          attribute: "root_passwd"
       register: decrypted_attribute
     - debug: msg=Result:{{ decrypted_attribute.value }}
     
