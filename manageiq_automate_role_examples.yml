@@ -13,6 +13,7 @@
   tasks:
     
   # Working with input parameters:
+  #
   #      'method_parameter_exists'
   #      'get_method_parameters’
   #      'get_method_parameter'
@@ -88,6 +89,7 @@
     - debug: msg="Result:{{ objects|dict2items }}"
   
   # Working with attributes:
+  #
   #      'attribute_exists':
   # 	   'get_attribute'
   #      'get_decrypted_attribute'
@@ -121,6 +123,24 @@
           attribute: "rhel_subscription_pool"
       register: rhel_subscription_pool
     - debug: msg="Result:{{ rhel_subscription_pool.value }}"
+    
+    - name: Get the "ldap_user_password" encrypted attribute from a configuration domain instance (get_decrypted_attribute)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_attribute:
+          object: "/Configuration/OpenShift/Parameters/default"
+          attribute: "ldap_user_password"
+      register: ldap_user_password
+    - debug: msg="Result:{{ ldap_user_password.value }}"
+    
+    - name: Get the "rhel_subscription_pass" encrypted attribute from a configuration domain instance (get_decrypted_attribute)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_attribute:
+          object: "/Configuration/OpenShift/Parameters/default"
+          attribute: "rhel_subscription_pass"
+      register: rhel_subscription_pass
+    - debug: msg="Result:{{ rhel_subscription_pass.value }}"
     
     - name: Get the value of the "ipam_passwd" attribute defined by a prior Ruby method (get_attribute)
       manageiq_automate:
