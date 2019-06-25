@@ -142,10 +142,19 @@
       register: rhel_subscription_pass
     - debug: msg="Result:{{ rhel_subscription_pass.value }}"
     
-    - name: Get the value of the "ipam_passwd" attribute defined by a prior Ruby method (get_attribute)
+    #- name: Get the value of the "ipam_passwd" attribute defined by a prior Ruby method (get_attribute)
+    #  manageiq_automate:
+    #    workspace: "{{ workspace }}"
+    #    get_attribute:
+    #      object: root
+    #      attribute: "ipam_passwd"
+    #  register: ipam_password
+    #- debug: msg="Result:{{ ipam_password.value }}"
+    
+    - name: Get the value of the "ipam_passwd" attribute defined and encrypted by a prior Ruby method (get_decrypted_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
-        get_attribute:
+        get_decrypted_attribute:
           object: root
           attribute: "ipam_passwd"
       register: ipam_password
