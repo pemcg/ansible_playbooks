@@ -150,7 +150,16 @@
           attribute: "ipam_passwd"
       register: ipam_password
     - debug: msg="Result:{{ ipam_password.value }}"
-      
+    
+    - name: Get the value of the "dialog_ipam_passwd" attribute input to a service dialog element (get_decrypted_attribute)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_attribute:
+          object: root
+          attribute: "dialog_ipam_passwd"
+      register: dialog_ipam_passwd
+    - debug: msg="Result:{{ dialog_ipam_passwd.value }}"
+    
     - name: Set a "domain_name" root attribute (set_attribute)
       manageiq_automate:
         workspace: "{{ workspace }}"
