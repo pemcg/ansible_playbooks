@@ -10,16 +10,12 @@
   tasks:
     
     - debug: msg="dialog_option_0_cores_per_socket={{ dialog_option_0_cores_per_socket }}"
-    - debug: msg="dialog_option_0_root_password_as_string={{ dialog_option_0_root_password_as_string }}"
-    - debug: msg="dialog_option_0_root_password_as_password={{ dialog_option_0_root_password_as_password }}"
-    #- debug: msg="dialog_options_to_s={{ dialog_options_to_s }}"
-    #- debug: msg="Dialog option name - {{ item.key }} with value - {{ item.value }}"
-    #  with_dict: "{{ dialog_options }}"
+    - debug: msg="dialog_option_0_root_password={{ dialog_option_0_root_password }}"
     
-    #- name: Decrypt a method_parameter called 'root_password' (get_decrypted_method_parameter)
-    #  manageiq_automate:
-    #    workspace: "{{ workspace }}"
-    #    get_decrypted_method_parameter:
-    #      attribute: 'dialog_options.password::dialog_option_0_root_password'
-    #  register: decrypted_method_parameter
-    #- debug: msg=Result:{{ decrypted_method_parameter.value }}
+    - name: Decrypt a method_parameter called 'dialog_option_0_root_password' (get_decrypted_method_parameter)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_method_parameter:
+          attribute: 'dialog_option_0_root_password'
+      register: decrypted_method_parameter
+    - debug: msg=Result:{{ decrypted_method_parameter.value }}
