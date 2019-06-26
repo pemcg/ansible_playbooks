@@ -9,7 +9,8 @@
   
   tasks:
     
-    - debug: msg="dialog_options:{{ dialog_options }}"
+    - debug: msg="dialog_options_to_s:{{ dialog_options_to_s }}"
+    - debug: msg="dialog_options_to_yaml:{{ dialog_options_to_yaml }}"
     #- debug: msg="Dialog option name - {{ item.key }} with value - {{ item.value }}"
     #  with_dict: "{{ dialog_options }}"
     
