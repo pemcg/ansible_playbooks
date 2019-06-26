@@ -1,0 +1,18 @@
+---
+- name: manageiq-automate role example usage
+  hosts: localhost
+  connection: local
+
+  gather_facts: False
+  roles:
+  - syncrou.manageiq-automate
+  
+  tasks:
+    - name: Decrypt a method_parameter called 'default_passwd' (get_decrypted_method_parameter)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_decrypted_method_parameter:
+          attribute: default_passwd
+      register: decrypted_method_parameter
+    - debug: msg=Result:{{ decrypted_method_parameter.value }}
+    - debug: msg="(The same from a built-in var:{{ default_passwd }})"
