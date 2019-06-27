@@ -243,9 +243,9 @@
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
 
 #- name: dump the workspace
-#  hosts: localhost
-#  roles:
-#  - ansible-role-listvars
+  hosts: localhost
+  roles:
+  - ansible-role-listvars
     
 
           
