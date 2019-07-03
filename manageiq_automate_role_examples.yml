@@ -68,13 +68,13 @@
   #    'get_object_attribute_names'
   #    'get_vmdb_object'
   
-    - name: check whether the configuration domain exists in the workspace (object_exists)
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        object_exists: 
-          object: "/Configuration/OpenShift/Parameters/default"
-      register: object_exists
-    - debug: msg="Result:{{ object_exists.value }}"
+    #- name: check whether the configuration domain exists in the workspace (object_exists)
+    #  manageiq_automate:
+    #    workspace: "{{ workspace }}"
+    #    object_exists: 
+    #      object: "/Configuration/OpenShift/Parameters/default"
+    #  register: object_exists
+    #- debug: msg="Result:{{ object_exists.value }}"
  
     - name: Get the full list of objects/instances in the workspace (get_object_names)
       manageiq_automate:
@@ -250,10 +250,10 @@
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
 
-- name: dump the workspace
-  hosts: localhost
-  roles:
-  - ansible-role-listvars
+#- name: dump the workspace
+#  hosts: localhost
+#  roles:
+#  - ansible-role-listvars
     
 
           
