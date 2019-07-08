@@ -250,10 +250,10 @@
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
 
-#- name: dump the workspace
-#  hosts: localhost
-#  roles:
-#  - ansible-role-listvars
+- name: dump the workspace
+  hosts: localhost
+  roles:
+  - ansible-role-listvars
     
 
           
