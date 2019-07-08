@@ -257,7 +257,7 @@
         get_attribute:
           object: root
           attribute: "ae_state_retries"
-        register: ae_state_retries
+      register: ae_state_retries
     - debug:
         msg: State retry number {{ ae_state_retries.value }}
         
