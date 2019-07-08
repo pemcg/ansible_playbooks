@@ -239,7 +239,8 @@
         get_state_var:
           attribute: "task_id"
       register: state_var
-    - debug: msg="Result:{{ state_var.value }}"
+    - debug:
+        msg Result = {{ state_var.value }}
     
     - name: Set a "job_id" state var (set_state_var)
       manageiq_automate:
@@ -249,11 +250,28 @@
           value: "68008"
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
+    
+    - name: Get the value of ae_state_retries
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: root
+          attribute: "ae_state_retries"
+        register: ae_state_retries
+    - debug:
+        msg: State retry number {{ ae_state_retries.value }}
+        
+    - name: Set state status to retry
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        set_retry:
+          interval: 30
+      when: ae_state_retries.value|int < 3
 
-- name: dump the workspace
-  hosts: localhost
-  roles:
-  - ansible-role-listvars
+#- name: dump the workspace
+#  hosts: localhost
+#  roles:
+#  - ansible-role-listvars
     
 
           
