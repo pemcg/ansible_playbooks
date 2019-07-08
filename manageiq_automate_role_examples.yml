@@ -97,7 +97,7 @@
         get_attribute:
           object: root
           attribute: "{{ item }}"
-      no_log: True
+      #no_log: True
       ignore_errors: yes
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
