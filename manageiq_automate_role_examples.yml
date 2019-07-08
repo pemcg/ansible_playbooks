@@ -97,19 +97,10 @@
         get_attribute:
           object: root
           attribute: "{{ item }}"
-      #no_log: True
       ignore_errors: yes
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
-      
-    - name: Extract the attribute names and values into a list
-      set_fact:
-        root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
-      #no_log: True
-      ignore_errors: yes
-      loop: "{{ root_attributes.results }}"
-    - debug: msg="root objects:{{ root_objects }}"
-       
+             
     - name: Get the root object's href'able attributes as objects (get_vmdb_object)
       manageiq_automate:
         workspace: "{{ workspace }}"
@@ -269,23 +260,15 @@
           value: "68008"
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
-    
-    - name: Get the value of ae_state_retries
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_attribute:
-          object: root
-          attribute: "ae_state_retries"
-      register: ae_state_retries
+           
     - debug:
-        msg: State retry number {{ ae_state_retries.value }}
-        
+        msg: State retry number {{ workspace.workspace.input.objects.root.ae_state_retries }}
     - name: Set state status to retry
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_retry:
           interval: 30
-      when: ae_state_retries.value|int < 3
+      when: workspace.workspace.input.objects.root.ae_state_retries|int < 3
 
 #- name: dump the workspace
 #  hosts: localhost
