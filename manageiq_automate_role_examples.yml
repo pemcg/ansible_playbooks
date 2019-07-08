@@ -105,7 +105,8 @@
     - name: Extract the attribute names and values into a list
       set_fact:
         root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
-      no_log: True
+      #no_log: True
+      ignore_errors: yes
       loop: "{{ root_attributes.results }}"
     - debug: msg="root objects:{{ root_objects }}"
        
