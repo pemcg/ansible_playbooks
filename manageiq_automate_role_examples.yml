@@ -90,6 +90,23 @@
           object: "root"
       register: root_object_attribute_names
     - debug: msg="Result:{{ root_object_attribute_names.value }}"
+      
+    - name: "Get each of the root object's attributes (get_attribute)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: root
+          attribute: "{{ item }}"
+      no_log: True
+      loop: "{{ root_object_attribute_names.value }}"
+      register: root_attributes
+      
+    - name: Extract the attribute names and values into a list
+      set_fact:
+        root_objects: "{{ root_objects|default({}) | combine( {item.item: item.value} ) }}"
+      no_log: True
+      loop: "{{ root_attributes.results }}"
+    - debug: msg="root objects:{{ root_objects }}"
        
     - name: Get the root object's href'able attributes as objects (get_vmdb_object)
       manageiq_automate:
