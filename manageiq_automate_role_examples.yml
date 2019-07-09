@@ -177,7 +177,10 @@
           object: root
           attribute: "ipam_passwd"
       register: ipam_password
-    - debug: msg="Result:{{ ipam_password.value }}"
+      ignore_errors: yes
+    - debug:
+        msg Result = {{ ipam_password.value }}
+      when: result is succeeded
     
     - name: Set a "domain_name" root attribute (set_attribute)
       manageiq_automate:
