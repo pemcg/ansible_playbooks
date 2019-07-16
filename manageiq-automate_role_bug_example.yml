@@ -1,0 +1,27 @@
+---
+- name: manageiq-automate role bug example
+  hosts: localhost
+  connection: local
+
+  gather_facts: False
+  roles:
+  - syncrou.manageiq-automate
+  
+  tasks:
+    - name: Get the list of root object attribute names (get_object_attribute_names)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_object_attribute_names:
+          object: "root"
+      register: root_object_attribute_names
+    - debug: msg="Result:{{ root_object_attribute_names.value }}"
+      
+    - name: "Get each of the root object's attributes (get_attribute)"
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: root
+          attribute: "{{ item }}"
+      ignore_errors: yes
+      loop: "{{ root_object_attribute_names.value }}"
+      register: root_attributes
