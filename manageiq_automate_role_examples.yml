@@ -11,6 +11,7 @@
   #- syncrou.manageiq-automate
   - manageiq-core.manageiq-automate
   
+  
   tasks:
     
   # Working with input parameters:
