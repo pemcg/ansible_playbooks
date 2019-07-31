@@ -8,9 +8,7 @@
 
   gather_facts: False
   roles:
-  #- syncrou.manageiq-automate
   - manageiq-core.manageiq-automate
-  
   
   tasks:
     
