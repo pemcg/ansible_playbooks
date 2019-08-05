@@ -1,0 +1,13 @@
+---
+- name: Example usage of playbook service vars
+  hosts: localhost
+  connection: local
+
+  gather_facts: False
+  
+  tasks:
+    - name: "set some service vars"
+      set_stats:
+        data:
+          service_var__var1: "first_service_var"
+          service_var__var2: "second_service_var"

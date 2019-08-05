@@ -1,0 +1,10 @@
+---
+- name: Example usage of playbook service vars
+  hosts: localhost
+  connection: local
+
+  gather_facts: False
+  
+  tasks:
+    - debug:
+        msg ansible_stat_var1 is {{ ansible_stat_var1 }}
