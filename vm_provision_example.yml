@@ -1,21 +1,29 @@
 ---
-- name: manageiq-automate role example usage
+- name: Example usage of playbook in VM Provision state machine
   hosts: localhost
   connection: local
 
   gather_facts: False
-  roles:
-  - syncrou.manageiq-automate
+  #roles:
+  #- syncrou.manageiq-automate
   
   tasks:
     
     - debug: msg="dialog_option_0_cores_per_socket={{ dialog_option_0_cores_per_socket }}"
     - debug: msg="dialog_option_0_root_password={{ dialog_option_0_root_password }}"
     
-    - name: Decrypt a method_parameter called 'dialog_option_0_root_password' (get_decrypted_method_parameter)
-      manageiq_automate:
-        workspace: "{{ workspace }}"
-        get_decrypted_method_parameter:
-          attribute: 'dialog_option_0_root_password'
-      register: decrypted_method_parameter
-    - debug: msg=Result:{{ decrypted_method_parameter.value }}
+    #- name: Decrypt a method_parameter called 'dialog_option_0_root_password' (get_decrypted_method_parameter)
+    #  manageiq_automate:
+    #    workspace: "{{ workspace }}"
+    #    get_decrypted_method_parameter:
+    #      attribute: 'dialog_option_0_root_password'
+    #  register: decrypted_method_parameter
+    #- debug: msg=Result:{{ decrypted_method_parameter.value }}
+
+    - name: "set IPAM details in the provisioning options hash"
+      set_stats:
+        data:
+          miq_provision__options__ip_addr: "192.168.1.23"
+          miq_provision__options__subnet_mask: "255.255.255.0"
+          miq_provision__options__gateway: "192.168.1.254"
+     
