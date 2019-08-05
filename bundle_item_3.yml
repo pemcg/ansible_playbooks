@@ -7,4 +7,4 @@
   
   tasks:
     - debug:
-        msg ansible_stat_var1 is {{ ansible_stat_var1 }}
+        msg ansible_stats_var1 is {{ ansible_stats_var1 }}
