@@ -6,5 +6,18 @@
   gather_facts: False
   
   tasks:
-    - debug:
-        msg ansible_stat_var1 is {{ ansible_stat_var1 }}
+    #- debug:
+    #    msg ansible_stat_var1 is {{ ansible_stat_var1 }}
+    
+    - name: Display all Environment Variables
+      debug:
+        var: environment
+    - name: Display all group names
+      debug:
+        var: group_names
+    - name: Display all groups
+      debug:
+        var: groups
+    - name: Display all variables/facts known for a host
+      debug:
+        var: hostvars[inventory_hostname]
