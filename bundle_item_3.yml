@@ -6,11 +6,15 @@
   gather_facts: False
   
   tasks:
-    - debug:
-        msg service_var__var1 is {{ service_var__var1 }}
-        
-    - debug:
-        msg service_var__var2 is {{ service_var__var2 }}
+    - name: print ip_addr
+      debug:
+        msg ip_addr is {{ ip_addr }}  
+    - name print netmask
+      debug:
+        msg netmask is {{ netmask }}
+    - name print gateway
+      debug:
+        msg gateway is {{ gateway }}
     
     - name: Display all Environment Variables
       debug:

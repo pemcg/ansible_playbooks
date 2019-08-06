@@ -2,13 +2,20 @@
 - name: Example usage of playbook service vars
   hosts: localhost
   connection: local
+  vars:
+    - object: root
+    - interval: 600
+    - ipam_return:
+      - ipaddress: "192.168.1.44"
+      - netmask: "255.255.255.0"
+      - gateway: "192.168.1.254"
 
   gather_facts: False
   
   tasks:
-    - name: "set some service vars"
+    - name: Save IPAM detail back to the workspace
       set_stats:
         data:
-          service_var__var1: "first_service_var"
-          service_var__var2: "second_service_var"
-          service_var_ansible_stat__var2: "first_ansible_stat_service_var"
+          ip_addr: "{{ ipam_return.ipaddress }}"
+          netmask: "{{ ipam_return.netmask }}"
+          gateway: "{{ ipam_return.gateway }}"
