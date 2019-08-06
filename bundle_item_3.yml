@@ -9,10 +9,10 @@
     - name: print ip_addr
       debug:
         msg: "ip_addr is {{ ip_addr }}"
-    - name print netmask
+    - name: print netmask
       debug:
         msg: "netmask is {{ netmask }}"
-    - name print gateway
+    - name: print gateway
       debug:
         msg: "gateway is {{ gateway }}"
     
