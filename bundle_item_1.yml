@@ -6,9 +6,9 @@
     - object: root
     - interval: 600
     - ipam_return:
-      - ipaddress: "192.168.1.44"
-      - netmask: "255.255.255.0"
-      - gateway: "192.168.1.254"
+        ipaddress: "192.168.1.44"
+        netmask: "255.255.255.0"
+        gateway: "192.168.1.254"
 
   gather_facts: False
   
