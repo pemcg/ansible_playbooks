@@ -8,13 +8,13 @@
   tasks:
     - name: print ip_addr
       debug:
-        msg ip_addr is {{ ip_addr }}  
+        msg: "ip_addr is {{ ip_addr }}"
     - name print netmask
       debug:
-        msg netmask is {{ netmask }}
+        msg: "netmask is {{ netmask }}"
     - name print gateway
       debug:
-        msg gateway is {{ gateway }}
+        msg: "gateway is {{ gateway }}"
     
     - name: Display all Environment Variables
       debug:
