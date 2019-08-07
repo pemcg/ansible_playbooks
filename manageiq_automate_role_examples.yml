@@ -246,14 +246,23 @@
       register: state_var_exists
     - debug: msg="Result:{{ state_var_exists.value }}"
     
+    - name: Get the value of the "request_id" state var (get_state_var)
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_state_var:
+          attribute: "request_id"
+      register: state_var1
+    - debug:
+        msg Result = {{ state_var1.value }}
+        
     - name: Get the value of the "task_id" state var (get_state_var)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_state_var:
           attribute: "task_id"
-      register: state_var
+      register: state_var2
     - debug:
-        msg Result = {{ state_var.value }}
+        msg Result = {{ state_var2.value }}
     
     - name: Set a "job_id" state var (set_state_var)
       manageiq_automate:
@@ -273,10 +282,10 @@
           interval: 30
       when: workspace.workspace.input.objects.root.ae_state_retries|int < 3
 
-#- name: dump the workspace
-#  hosts: localhost
-#  roles:
-#  - ansible-role-listvars
+- name: dump the workspace
+  hosts: localhost
+  roles:
+  - ansible-role-listvars
     
 
           
