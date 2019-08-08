@@ -189,8 +189,6 @@
           object: "root"
           attribute: "domain_name"
           value:  "company.org"
-    #  register: updated_workspace
-    #- debug: msg="Result:{{ updated_workspace.workspace }}"
   
     - name: Set several IPAM-related root attributes (set_attributes)
       manageiq_automate:
@@ -201,8 +199,6 @@
             ipam_ip_address: "192.168.1.23"
             ipam_netmask: "255.255.255.0"
             ipam_gateway: "192.168.2.254"
-    #  register: updated_workspace
-    #- debug: msg="Result:{{ updated_workspace.workspace }}"
       
     - name: Encrypt a "root_passwd" object attribute (set_encrypted_attribute)
       manageiq_automate:
@@ -211,8 +207,6 @@
           object: root
           attribute: "root_passwd"
           value: "very_very_secret"
-    #  register: updated_workspace
-    #- debug: msg="Result:{{ updated_workspace }}"
     
     - name: Decrypt an attribute from an object (get_decrypted_attribute)
       manageiq_automate:
@@ -270,8 +264,6 @@
         set_state_var:
           attribute: "job_id"
           value: "68008"
-    #  register: updated_workspace
-    #- debug: msg="Result:{{ updated_workspace.workspace }}"
       
     - name: Get the value of ae_state_retries
       manageiq_automate:
@@ -279,7 +271,7 @@
         get_attribute:
           object: root
           attribute: "ae_state_retries"
-        register: ae_state_retries
+      register: ae_state_retries
     - debug:
         msg: State retry number {{ ae_state_retries.value }}
         
