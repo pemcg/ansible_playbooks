@@ -1,20 +1,8 @@
 ---
 - name: List Variables
   hosts: all
-
-#  roles:
-#     - ansible-role-listvars
-#     
+ 
   tasks:
-    #- name: Display all Environment Variables
-    #  debug:
-    #    msg: "environment = {{ environment }}"
-    #- name: Display all group names
-    #  debug:
-    #    msg: "group_names = {{ group_names }}"
-    #- name: Display all groups
-    #  debug:
-    #    msg: "groups = {{ groups }}"
     - name: Display all variables/facts known for a host
       debug:
         var: hostvars[inventory_hostname]
