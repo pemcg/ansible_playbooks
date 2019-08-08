@@ -179,7 +179,7 @@
       register: ipam_password
       ignore_errors: yes
     - debug:
-        msg Result = {{ ipam_password.value }}
+        msg: Result = {{ ipam_password.value }}
       when: ipam_password is succeeded
     
     - name: Set a "domain_name" root attribute (set_attribute)
@@ -253,7 +253,7 @@
           attribute: "request_id"
       register: state_var1
     - debug:
-        msg Result = {{ state_var1.value }}
+        msg: Result = {{ state_var1.value }}
         
     - name: Get the value of the "task_id" state var (get_state_var)
       manageiq_automate:
@@ -262,7 +262,7 @@
           attribute: "task_id"
       register: state_var2
     - debug:
-        msg Result = {{ state_var2.value }}
+        msg: Result = {{ state_var2.value }}
     
     - name: Set a "job_id" state var (set_state_var)
       manageiq_automate:
