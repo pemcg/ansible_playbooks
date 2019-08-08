@@ -1,5 +1,5 @@
 ---
-- name: manageiq-automate role bug example
+- name: manageiq-automate role bug example 
   hosts: localhost
   connection: local
 
