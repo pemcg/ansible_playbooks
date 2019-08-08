@@ -272,15 +272,32 @@
           value: "68008"
     #  register: updated_workspace
     #- debug: msg="Result:{{ updated_workspace.workspace }}"
-           
+      
+    - name: Get the value of ae_state_retries
+      manageiq_automate:
+        workspace: "{{ workspace }}"
+        get_attribute:
+          object: root
+          attribute: "ae_state_retries"
+        register: ae_state_retries
     - debug:
-        msg: State retry number {{ workspace.workspace.input.objects.root.ae_state_retries }}
+        msg: State retry number {{ ae_state_retries.value }}
+        
     - name: Set state status to retry
       manageiq_automate:
         workspace: "{{ workspace }}"
         set_retry:
-          interval: 30
-      when: workspace.workspace.input.objects.root.ae_state_retries|int < 3
+          interval: 60
+      when: ae_state_retries.value|int < 3
+     
+    #- debug:
+    #    msg: State retry number {{ workspace.workspace.input.objects.root.ae_state_retries }}
+    #- name: Set state status to retry
+    #  manageiq_automate:
+    #    workspace: "{{ workspace }}"
+    #    set_retry:
+    #      interval: 30
+    #  when: workspace.workspace.input.objects.root.ae_state_retries|int < 3
 
 #- name: dump the workspace
 #  hosts: localhost
