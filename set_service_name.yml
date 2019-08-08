@@ -29,19 +29,19 @@
         resource:
           name: "{{ current_service.json.name }} {{ timestamp }}"
           
-  - pause:
-      minutes: 1
-          
-  - name: Now delete the service 
-    uri:
-      url: "{{ manageiq.api_url }}/api/services"
-      method: POST
-      validate_certs: no
-      headers:
-        X-Auth-Token: "{{ manageiq.api_token }}"
-      body_format: json
-      body:
-        action: delete
-        resource:
-          href: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+  #- pause:
+  #    minutes: 1
+  #        
+  #- name: Now delete the service 
+  #  uri:
+  #    url: "{{ manageiq.api_url }}/api/services"
+  #    method: POST
+  #    validate_certs: no
+  #    headers:
+  #      X-Auth-Token: "{{ manageiq.api_token }}"
+  #    body_format: json
+  #    body:
+  #      action: delete
+  #      resource:
+  #        href: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
 
