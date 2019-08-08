@@ -25,3 +25,8 @@
       ignore_errors: yes
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
+      
+    - name: dump the workspace
+      hosts: localhost
+      roles:
+      - ansible-role-listvars
