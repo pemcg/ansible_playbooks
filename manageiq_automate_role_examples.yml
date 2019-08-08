@@ -282,10 +282,10 @@
           interval: 30
       when: workspace.workspace.input.objects.root.ae_state_retries|int < 3
 
-- name: dump the workspace
-  hosts: localhost
-  roles:
-  - ansible-role-listvars
+#- name: dump the workspace
+#  hosts: localhost
+#  roles:
+#  - ansible-role-listvars
     
 
           
