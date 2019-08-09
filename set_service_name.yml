@@ -6,6 +6,11 @@
   - set_fact:
       timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
       
+  - name: Print the service description
+    debug:
+      msg: "Service description is {{ description }}"
+    when: description is defined  
+      
   - name: Get the existing service name
     uri:
       url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
