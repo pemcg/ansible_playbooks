@@ -1,0 +1,17 @@
+---
+- name: manageiq-vmdb role example usage
+  hosts: localhost
+  connection: local
+
+  roles:
+  - syncrou.manageiq-vmdb
+
+  tasks:
+  - name: Get a vmdb object
+    manageiq_vmdb:
+      href: "services/3"
+    register: vmdb_object
+    
+  - name: Print the object
+    debug:
+      msg: "Services object is {{ vmdb_object }}"
