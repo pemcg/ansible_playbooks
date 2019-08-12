@@ -4,8 +4,8 @@
   vars: 
     package: from_playbook
     
-  roles:
-   - ansible-role-listvars
+  #roles:
+  # - ansible-role-listvars
 
   tasks:
   
