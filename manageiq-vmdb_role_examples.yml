@@ -4,7 +4,7 @@
   connection: local
 
   roles:
-  - syncrou.manageiq-vmdb
+  - manageiq-core.manageiq-vmdb
 
   tasks:
   - name: Get a vmdb object
