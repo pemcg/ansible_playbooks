@@ -26,7 +26,7 @@
 
   - name: Get the VM object
     manageiq_vmdb:
-      href: "vms&filter[]=name=fred_vm_2"
+      href: "vms?filter[]=name=fred_vm_2"
     register: vm
 
   - name: Add the VM to the service
