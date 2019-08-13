@@ -15,15 +15,7 @@
   - name: Print the service details
     debug:
       msg: "Services object is {{ service }}"
-      
-  #{
-  #   "action" : "edit",
-  #   "resource" : {
-  #     "name" : "Updated Service Name",
-  #     "description" : "Updated Service Description"
-  #   }
-  #}
-      
+          
   - name: Rename the service
     manageiq_vmdb:
       vmdb: "{{ service }}"
@@ -32,31 +24,9 @@
         name: "manageiq-vmdb role example usage"
         description: "manageiq-vmdb role example usage run on {{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
 
-  #{
-  #  "action" : "add_provider_vms",
-  #  "resource" : {
-  #    "provider" : { "href" : "http://localhot:3000/api/providers/11" }
-  #    "uid_ems" : [
-  #      "provider_vm_id1",
-  #      "provider_vm_id2",
-  #      ...
-  #    ]
-  #  }
-  #}
-  
-    #- name: Service Linking via an href slug
-    #manageiq_vmdb:
-    #  href: "href_slug::services/80"
-    #  action: add_provider_vms
-    #  data:
-    #    uid_ems:
-    #      - "{{ ec2.instances[0].id }}"
-    #    provider:
-    #      id: 24
-    
   - name: Get the VM object
     manageiq_vmdb:
-      href: "vms/18"
+      href: "vms/filter[]=name=fred_vm_2"
     register: vm
 
   - name: Add the VM to the service
@@ -66,3 +36,4 @@
       data:
         resource:
           href: "{{ vm.href }}"
+          
