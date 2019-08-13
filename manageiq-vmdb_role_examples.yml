@@ -2,6 +2,9 @@
 - name: manageiq-vmdb role example usage
   hosts: localhost
   connection: local
+  vars:
+  - manageiq_connection:
+      manageiq_validate_certs: false
 
   roles:
   - manageiq-core.manageiq-vmdb
