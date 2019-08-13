@@ -9,9 +9,47 @@
   tasks:
   - name: Get a vmdb object
     manageiq_vmdb:
-      href: "services/3"
-    register: vmdb_object
+      href: "{{ manageiq.service }}"
+    register: service
     
-  - name: Print the object
+  - name: Print the service details
     debug:
-      msg: "Services object is {{ vmdb_object }}"
+      msg: "Services object is {{ service }}"
+      
+  #{
+  #   "action" : "edit",
+  #   "resource" : {
+  #     "name" : "Updated Service Name",
+  #     "description" : "Updated Service Description"
+  #   }
+  #}
+      
+  - name: Rename the service
+    manageiq_vmdb:
+      vmdb: "{{ service }}"
+      action: edit
+      data:
+        name: "manageiq-vmdb role example usage"
+        description: "manageiq-vmdb role example usage run on {{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
+
+  #{
+  #  "action" : "add_provider_vms",
+  #  "resource" : {
+  #    "provider" : { "href" : "http://localhot:3000/api/providers/11" }
+  #    "uid_ems" : [
+  #      "provider_vm_id1",
+  #      "provider_vm_id2",
+  #      ...
+  #    ]
+  #  }
+  #}
+
+  #- name: Service Linking via an object
+  #  manageiq_vmdb:
+  #    vmdb: "{{ vmdb_object }}"
+  #    action: add_provider_vms
+  #    data:
+  #      uid_ems:
+  #        - "asdf234"
+  #      provider:
+  #        id: 24
