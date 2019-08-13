@@ -31,7 +31,7 @@
   - set_fact:
       vm_href: "{{ vm.resources[0].href }}"
       
-  - name: print the VM's href
+  - name: print the VM href
     debug:
       msg: "VM href: {{ vm_href }}"
       
