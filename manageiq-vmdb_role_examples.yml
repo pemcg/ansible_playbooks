@@ -59,4 +59,5 @@
       vmdb: "{{ service }}"
       action: add_resource
       data:
-        resource: 18
+        resource:
+          id: 18
