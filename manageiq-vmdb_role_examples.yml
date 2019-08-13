@@ -26,14 +26,14 @@
 
   - name: Get the VM object
     manageiq_vmdb:
-      href: "vms?filter[]=name=fred_vm_2"
+      href: "vms?filter[]=name=cloudforms04.bit63.net"
     register: vm
   - set_fact:
       vm_href: "{{ vm.resources[0].href }}"
       
-  - name: print the VM href
+  - name: print the VM
     debug:
-      msg: "VM href: {{ vm_href }}"
+      msg: "VM: {{ vm }}"
       
   - name: Add the VM to the service
     manageiq_vmdb:
