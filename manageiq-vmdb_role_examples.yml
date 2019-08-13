@@ -2,9 +2,6 @@
 - name: manageiq-vmdb role example usage
   hosts: localhost
   connection: local
-  vars:
-  - manageiq_connection:
-      manageiq_validate_certs: false
 
   roles:
   - manageiq-core.manageiq-vmdb
@@ -46,13 +43,20 @@
   #    ]
   #  }
   #}
+  
+    #- name: Service Linking via an href slug
+    #manageiq_vmdb:
+    #  href: "href_slug::services/80"
+    #  action: add_provider_vms
+    #  data:
+    #    uid_ems:
+    #      - "{{ ec2.instances[0].id }}"
+    #    provider:
+    #      id: 24
 
-  #- name: Service Linking via an object
-  #  manageiq_vmdb:
-  #    vmdb: "{{ vmdb_object }}"
-  #    action: add_provider_vms
-  #    data:
-  #      uid_ems:
-  #        - "asdf234"
-  #      provider:
-  #        id: 24
+  - name: Add the VM to the service
+    manageiq_vmdb:
+      vmdb: "{{ service }}"
+      action: add_resource
+      data:
+        resource: 18
