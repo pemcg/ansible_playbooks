@@ -60,4 +60,4 @@
       action: add_resource
       data:
         resource:
-          id: 18
+          href: "href_slug::vms/18"
