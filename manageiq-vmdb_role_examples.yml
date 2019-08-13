@@ -53,6 +53,11 @@
     #      - "{{ ec2.instances[0].id }}"
     #    provider:
     #      id: 24
+    
+  - name: Get the VM object
+    manageiq_vmdb:
+      href: "vms/18"
+    register: vm
 
   - name: Add the VM to the service
     manageiq_vmdb:
@@ -60,4 +65,4 @@
       action: add_resource
       data:
         resource:
-          href: "href_slug::vms/18"
+          href: "{{ vm.href }}"
