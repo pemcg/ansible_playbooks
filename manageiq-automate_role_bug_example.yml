@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
 
-  gather_facts: False
+  gather_facts: false
   roles:
   - manageiq-core.manageiq-automate
   
@@ -26,7 +26,7 @@
       loop: "{{ root_object_attribute_names.value }}"
       register: root_attributes
       
-- name: dump the workspace
-  hosts: localhost
-  roles:
-  - ansible-role-listvars
+#- name: dump the workspace
+#  hosts: localhost
+#  roles:
+#  - ansible-role-listvars
