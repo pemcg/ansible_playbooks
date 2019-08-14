@@ -35,18 +35,18 @@
         Content-Type:  application/json
       body_format: json
     register: vm
-  - set_fact:
-      vm_href: "{{ vm.resources[0].href }}"
+  #- set_fact:
+  #    vm_href: "{{ vm.resources[0].href }}"
       
   - name: print the VM
     debug:
       msg: "VM: {{ vm }}"
       
-  - name: Add the VM to the service
-    manageiq_vmdb:
-      vmdb: "{{ service }}"
-      action: add_resource
-      data:
-        resource:
-          href: "{{ vm_href }}"
+  #- name: Add the VM to the service
+  #  manageiq_vmdb:
+  #    vmdb: "{{ service }}"
+  #    action: add_resource
+  #    data:
+  #      resource:
+  #        href: "{{ vm_href }}"
           
