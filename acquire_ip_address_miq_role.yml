@@ -15,7 +15,7 @@
     
   - name: Update Request with new IP and Hostname Information
     manageiq_vmdb:
-      href: "{{ request_task }}"
+      href: "{{ manageiq.request_task }}"
       #href: "provision_requests/{{ miq_provision_request_id }}/request_tasks/{{ miq_provision_id }}"
       action: edit
       data:
