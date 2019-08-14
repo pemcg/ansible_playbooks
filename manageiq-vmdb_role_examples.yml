@@ -25,10 +25,15 @@
       data:
         name: "manageiq-vmdb role example usage"
         description: "manageiq-vmdb role example usage run on {{ lookup('pipe', 'date +%Y-%m-%d\\ %H:%M') }}"
-
+        
   - name: Get the VM object
-    manageiq_vmdb:
-      href: "vms?filter[]=name=cloudforms04.bit63.net"
+    uri:
+      url: "{{ manageiq.api_url }}/api/vms?filter[]=name=cloudforms04.bit63.net"
+      validate_certs: no
+      headers:
+        X-Auth-Token: "{{ manageiq.api_token }}"
+        Content-Type:  application/json
+      body_format: json
     register: vm
   - set_fact:
       vm_href: "{{ vm.resources[0].href }}"
