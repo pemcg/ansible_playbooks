@@ -9,7 +9,7 @@
   - manageiq_validate_certs: false
       
   roles:
-    - syncrou.manageiq-vmdb
+  - manageiq-core.manageiq-vmdb
      
   tasks:
   - debug: var=miq_provision_id
