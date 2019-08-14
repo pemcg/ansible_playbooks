@@ -43,14 +43,14 @@
     - debug: msg="Result:{{ method_parameter.value }}"
     - debug: msg="(The same from a built-in var:{{ ipam_url }})"
     
-    - name: Decrypt a method_parameter called 'default_passwd' (get_decrypted_method_parameter)
+    - name: Decrypt a method_parameter called 'default_password' (get_decrypted_method_parameter)
       manageiq_automate:
         workspace: "{{ workspace }}"
         get_decrypted_method_parameter:
-          attribute: default_passwd
+          attribute: default_password
       register: decrypted_method_parameter
     - debug: msg=Result:{{ decrypted_method_parameter.value }}
-    - debug: msg="(The same from a built-in var:{{ default_passwd }})"
+    - debug: msg="(The same from a built-in var:{{ default_password }})"
     
     - name: Decrypt a method_parameter called 'dialog_option_0_root_password' (get_decrypted_method_parameter)
       manageiq_automate:
