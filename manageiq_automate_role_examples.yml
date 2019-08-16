@@ -142,7 +142,7 @@
           object: "/Configuration/OpenShift/Parameters/default"
           attribute: "rhel_subscription_pool"
       register: rhel_subscription_pool
-    - debug: msg="Result:{{ rhel_subscription_pool.value }}"
+    - debug: msg="Result:{{ rhel_subscription_pool }}"
     
     - name: Get the "ldap_user_password" encrypted attribute from a configuration domain instance (get_decrypted_attribute)
       manageiq_automate:
@@ -151,7 +151,7 @@
           object: "/Configuration/OpenShift/Parameters/default"
           attribute: "ldap_user_password"
       register: ldap_user_password
-    - debug: msg="Result:{{ ldap_user_password.value }}"
+    - debug: msg="Result:{{ ldap_user_password }}"
     
     - name: Get the "rhel_subscription_pass" encrypted attribute from a configuration domain instance (get_decrypted_attribute)
       manageiq_automate:
