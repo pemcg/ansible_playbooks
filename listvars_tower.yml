@@ -12,3 +12,4 @@
 
   tasks:
   - debug: var=hostvars[inventory_hostname].cloudforms
+  - debug: var=hostvars[inventory_hostname]
