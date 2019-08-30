@@ -1,11 +1,11 @@
 ---
-- name: manageiq-automate role example 
+- name: manageiq-automate role example - Tower
   hosts: localhost
   connection: local
 
   gather_facts: false
   roles:
-  - manageiq-core.manageiq-automate
+  - syncrou.manageiq-automate
   
   tasks:
     - name: Get the list of root object attribute names (get_object_attribute_names)
