@@ -56,7 +56,7 @@
   # Working with Objects:
   #
   #    'object_exists'
-  #    'get_object_names'
+  #    'get_object_names'≠≠≠
   #    'get_object_attribute_names'
   #    'get_vmdb_object'
   
