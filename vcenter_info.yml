@@ -1,0 +1,30 @@
+---
+- name: "list information about vCenter infrastructure"
+  hosts: all
+  gather_facts: False
+  vars_files:
+    - "vault.yml"
+
+  tasks:
+
+  - name: Provide information about vCenter
+    vmware_about_info:
+      hostname: '{{ vcenter_hostname }}'
+      username: '{{ vcenter_username }}'
+      password: '{{ vcenter_password }}'
+    delegate_to: localhost
+    register: vcenter_about_info
+
+  - debug:
+    msg: "vCenter info = {{ vcenter_about_info }}"
+
+  - name: Provide information about a standalone ESXi server
+    vmware_about_info:
+      hostname: '{{ esxi_hostname }}'
+      username: '{{ esxi_username }}'
+      password: '{{ esxi_password }}'
+    delegate_to: localhost
+    register: esxi_about_info
+
+  - debug:
+    msg: "ESXi info = {{ esxi_about_info }}""
