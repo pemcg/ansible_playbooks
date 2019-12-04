@@ -44,3 +44,16 @@
 
   - debug:
       msg: ESXi info = {{ esxi_config_info }}
+
+  - name: Provide config information about ESXi servers
+    vmware_host_feature_info:
+      hostname: '{{ esxi_hostname }}'
+      username: '{{ esxi_username }}'
+      password: '{{ esxi_password }}'
+      cluster_name: V2V_Cluster
+      validate_certs: no
+    delegate_to: localhost
+    register: esxi_feature_info
+
+  - debug:
+      msg: ESXi info = {{ esxi_feature_info }}
