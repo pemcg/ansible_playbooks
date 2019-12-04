@@ -12,6 +12,7 @@
       hostname: '{{ vcenter_hostname }}'
       username: '{{ vcenter_username }}'
       password: '{{ vcenter_password }}'
+      validate_certs: no
     delegate_to: localhost
     register: vcenter_about_info
 
@@ -23,6 +24,7 @@
       hostname: '{{ esxi_hostname }}'
       username: '{{ esxi_username }}'
       password: '{{ esxi_password }}'
+      validate_certs: no
     delegate_to: localhost
     register: esxi_about_info
 
