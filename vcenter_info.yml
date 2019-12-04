@@ -32,7 +32,7 @@
   - debug:
       msg: ESXi info = {{ esxi_capability_info }}
 
-    - name: Provide config information about ESXi servers
+  - name: Provide config information about ESXi servers
     vmware_host_config_info:
       hostname: '{{ esxi_hostname }}'
       username: '{{ esxi_username }}'
