@@ -16,7 +16,7 @@
     register: vcenter_about_info
 
   - debug:
-    msg: "vCenter info = {{ vcenter_about_info }}"
+      msg: vCenter info = {{ vcenter_about_info }}
 
   - name: Provide information about a standalone ESXi server
     vmware_about_info:
@@ -27,4 +27,4 @@
     register: esxi_about_info
 
   - debug:
-    msg: "ESXi info = {{ esxi_about_info }}"
+      msg: ESXi info = {{ esxi_about_info }}
