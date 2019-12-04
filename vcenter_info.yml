@@ -27,4 +27,4 @@
     register: esxi_about_info
 
   - debug:
-    msg: "ESXi info = {{ esxi_about_info }}""
+    msg: "ESXi info = {{ esxi_about_info }}"
