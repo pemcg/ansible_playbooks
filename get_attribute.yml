@@ -5,7 +5,7 @@
   
   vars:
   - manageiq_validate_certs: false
-  - auto_commit: false
+  - auto_commit: true
   
   roles:
   - syncrou.manageiq-automate
