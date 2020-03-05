@@ -8,12 +8,6 @@
     retry_interval: 20
 
 
-            # "ansible_env": {
-            # "OVIRT_INI_PATH": "/tmp/awx_6_uJBsqw/tmp59WpHz", 
-            # "OVIRT_PASSWORD": "smartvm", 
-            # "OVIRT_URL": "rhevm01.bit63.net", 
-            # "OVIRT_USERNAME": "admin@internal", 
-
   tasks:
     - name: Set the Provider URL
       set_fact:
