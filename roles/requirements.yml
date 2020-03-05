@@ -1,7 +1,7 @@
 ---
 # from galaxy
-- src: syncrou.manageiq-automate
-- src: syncrou.manageiq-vmdb
+#- src: syncrou.manageiq-automate
+#- src: syncrou.manageiq-vmdb
 - src: https://github.com/pemcg/ansible-role-listvars
   version: master
   name: ansible-role-listvars
