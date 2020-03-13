@@ -25,7 +25,7 @@
           rhsm_repository:
             name: "{{ item }}"
             state: enabled
-          loop: {{ rhn_repositories.split(",") }}
+          loop: "{{ rhn_repositories.split(",") }}"
       when: ( subscription_status.stdout != "Subscribed" )
 
 
