@@ -23,8 +23,9 @@
         
         - name: Enable required repositories
           rhsm_repository:
-            name: "{{ rhn_repositories }}"
+            name: "{{ item }}"
             state: enabled
+          loop: {{ rhn_repositories.split(",") }}
       when: ( subscription_status.stdout != "Subscribed" )
 
 
