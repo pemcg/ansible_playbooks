@@ -28,7 +28,7 @@
           rhsm_repository:
             name: "{{ item }}"
             state: enabled
-          loop: "{{ rhn_repositories }}"
+          loop: "{{ rhn_repositories|list }}"
       when: ( subscription_status.stdout != "Subscribed" )
 
 
