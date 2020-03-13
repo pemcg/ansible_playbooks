@@ -6,6 +6,9 @@
       shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
       register: subscription_status
       changed_when: false
+      
+    - name: show the selected repositories
+      debug: var=rhn_repositories
     
     - name: Register system and enable required repositories
       block:
@@ -13,7 +16,7 @@
           redhat_subscription:
             username: "{{ rhn_username }}"
             password: "{{ rhn_password }}"
-            pool_ids: "{{ rhn_pool_ids }}"
+            pool_ids: "{{ rhn_pool_id }}"
             state: present
         
         - name: 'Disable all repositories except the required'
