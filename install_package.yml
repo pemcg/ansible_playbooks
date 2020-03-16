@@ -1,13 +1,10 @@
 ---
 - name: Install Package
   hosts: all
-  vars: 
-    package: from_playbook
-    
-  #roles:
-  # - ansible-role-listvars
-
   tasks:
-  
   - name: Install package
-    yum: name={{ package }} state=present
+  block:
+    yum:
+      name: "{{ package }}"
+      state: present
+  when package is defined

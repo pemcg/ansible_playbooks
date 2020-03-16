@@ -2,33 +2,39 @@
 - name: Register RHEL system with RHN
   hosts: all
   tasks:
-    - name: Check Subscription Status
-      shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
-      register: subscription_status
-      changed_when: false
+    - Register RHEL system with RHN
+    block:
+      - name: Check Subscription Status
+        shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
+        register: subscription_status
+        changed_when: false
+        
+      - name: show the selected repositories
+        debug: var=rhn_repositories
       
-    - name: show the selected repositories
-      debug: var=rhn_repositories
-    
-    - name: Register system and enable required repositories
-      block:
-        - name: Register system
-          redhat_subscription:
-            username: "{{ rhn_username }}"
-            password: "{{ rhn_password }}"
-            pool_ids: "{{ rhn_pool_id }}"
-            state: present
-        
-        - name: 'Disable all repositories except the required'
-          rhsm_repository:
-            name: "*"
-            state: disabled
-        
-        - name: Enable required repositories
-          rhsm_repository:
-            name: "{{ item }}"
-            state: enabled
-          loop: "{{ [rhn_repositories] }}"
-      when: ( subscription_status.stdout != "Subscribed" )
+      - name: Register system and enable required repositories
+        block:
+          - name: Register system
+            redhat_subscription:
+              username: "{{ rhn_username }}"
+              password: "{{ rhn_password }}"
+              pool_ids: "{{ rhn_pool_id }}"
+              state: present
+          
+          - name: 'Disable all repositories except the required'
+            rhsm_repository:
+              name: "*"
+              state: disabled
+          
+          - name: Enable required repositories
+            rhsm_repository:
+              name: "{{ item }}"
+              state: enabled
+            loop: "{{ [rhn_repositories] }}"
+        when: ( subscription_status.stdout != "Subscribed" )
+      when:
+        - rhn_username is defined
+        - rhn_password is defined
+        - rhn_pool_id is defined
 
 
