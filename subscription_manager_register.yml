@@ -3,7 +3,7 @@
   hosts: all
   tasks:
   - Register RHEL system with RHN if variables have been passed in
-      block:
+    block:
       - name: Check Subscription Status
         shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
         register: subscription_status
@@ -32,9 +32,9 @@
               state: enabled
             loop: "{{ [rhn_repositories] }}"
         when: ( subscription_status.stdout != "Subscribed" )
-      when:
-        - rhn_username is defined
-        - rhn_password is defined
-        - rhn_pool_id is defined
+    when:
+      - rhn_username is defined
+      - rhn_password is defined
+      - rhn_pool_id is defined
 
 
