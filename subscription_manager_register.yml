@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - Register RHEL system with RHN
-    block:
+      block:
       - name: Check Subscription Status
         shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
         register: subscription_status
