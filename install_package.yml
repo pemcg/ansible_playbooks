@@ -2,9 +2,8 @@
 - name: Install Package
   hosts: all
   tasks:
-  - name: Install package
-  block:
-    yum:
-      name: "{{ package }}"
-      state: present
-  when package is defined
+    - name: Install package
+      yum:
+        name: "{{ package }}"
+        state: present
+      when package is defined
