@@ -6,4 +6,4 @@
       yum:
         name: "{{ package }}"
         state: present
-      when package is defined
+      when: package is defined
