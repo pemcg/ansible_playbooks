@@ -17,7 +17,7 @@
             - name: Register system
               redhat_subscription:
                 username: "{{ rhn_username }}"
-                password: "{{ rhn_password }}"
+                password: "{{ rhn_passwd }}"
                 pool_ids: "{{ rhn_pool_id }}"
                 state: present
             
@@ -34,7 +34,7 @@
           when: ( subscription_status.stdout != "Subscribed" )
       when:
         - rhn_username is defined
-        - rhn_password is defined
+        - rhn_passwd is defined
         - rhn_pool_id is defined
 
 
