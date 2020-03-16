@@ -2,7 +2,7 @@
 - name: Register RHEL system with RHN
   hosts: all
   tasks:
-    - Register RHEL system with RHN if variables have been passed in
+    - name: Register RHEL system with RHN if variables have been passed in
       block:
         - name: Check Subscription Status
           shell: LANG=C subscription-manager list | awk  ' ( $1 == "Status:" ) { print $2 } ' | sort -u
