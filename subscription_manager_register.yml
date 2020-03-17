@@ -33,8 +33,8 @@
               loop: "{{ [rhn_repositories] }}"
           when: ( subscription_status.stdout != "Subscribed" )
       when:
-        - rhn_username is defined
-        - rhn_passwd is defined
-        - rhn_pool_id is defined
+        - rhn_username|length > 0
+        - rhn_passwd|length > 0
+        - rhn_pool_id|length > 0
 
 
