@@ -2,7 +2,23 @@
 - name: Print the time
   hosts: "{{ vm_target_name }}"
   vars: 
-    vm_target_name:
+  - vm_target_name:
+  - manageiq_validate_certs: false
+
+  roles:
+  - manageiq-core.manageiq-automate
   
   tasks:
   - debug: msg="In Ansible task at {{ ansible_date_time.iso8601 }} "
+  
+  - name: Save date back to the workspace
+    set_stats:
+      data:
+        date: "{{ ansible_date_time.iso8601 }}"
+        
+  - name: Set a state var using the role
+    manageiq_automate:
+      workspace: "{{ workspace }}"
+      set_state_var:
+        attribute: "coolio"
+        value: "test_message"
